@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "dotted-spot-440505-k9",
+  "private_key_id": "252b4e01d0c3d797f7c5b2d9effab15fd1461d4c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC/05ekT2iRsYKu\nv3Nfy4wudY0eUN22LpMHNpLq8OnFDN05/zym37eJdDSdvJlRqBnrgqbGVBPvZebs\n7aLpvTYmE7sFAcWXGTXXqxNuU5y7koXhYECV0Wg18jqhalDxW0KVnwG1LBsOjmMo\ntCUW8rZj796awCpcISqV+D31gzFO0Q3UUL+Epfu2ZmYAr2czR2+eLWd2//S6G518\n79EgolL2Y4PtDYJnPoLO9Vq57665vuEzcAjLetXE3/COxMJh3VPFoiIO31FwUIsk\nIAd2gURhb60c4iVEP/dbbz4YNb+JD/Cyzn8VJodOmesaZWAut7uTKjuClySiNSdf\nU/MkXnGdAgMBAAECggEAE3wpvh320D3IuXlm/ccOQTXdlMPAEZ5ffu8TM1wvUr3A\nxwBfJ9A3s3WjVpZuuHWr1FlcGW826y1drJli3/1BP9LnP1XzvSppZrPQ8Hb7x63V\nfZQqW01/GWO2gujquel8NPiG0uFdCjh6aAsMbW1QC4y0/uEgLGWODte9a2/dFVVH\nykjsoSbIDxP/cdrC294/M3TACehxpHlbhYSJpiPi5uwxtLQ8ZtxCxKilrv6Ca5OZ\nWXO4u9GZmF9vsnuNZy77PGsSrPFvgYZPgU9pXL1deNnzpc4gUYyuhnIJ70U5iQZO\nYB5qWzmECEHwGl/6wdCsiwQexsnC8+9KrHqPMzTwwQKBgQDrDC9z4SxNYwpGYrXU\nkuFIZRh7KL2GdxU6zEz/azBb6WpfOQhWFIklPQoCZqquPINbfWce6A9S25oPgIMq\n+k3BsQs7ODXhNNFN0nhwNHCDhHdAs2Hzme6idkbklO8xEN56S1YavCseoGU03lXu\ns6pcJAoN3Lp/oL9GBwzRpZqJzQKBgQDQ7RjWpzppw6/cK95lQ1T/0Tbv+N6AYKyh\nQyZyY6rqmS3haNdoHjq0tr50ODBzWm3m9rb1DuaNy5V61+ib89Uoz8e8puVCIB+j\nKhY9nKOlb5X++fMEpWU120C3S2Ssw1eEsYFzA1iTzFFiz+GPe+uOcF6F6EryFS3K\nbxySmkF3EQKBgHt8gGWx9DOIB/romzzeGeuN6WmzArdlUsr8UKuUJejz3YW/keif\ni1n8EokmZR96/UwQux+arYpLg0oHq2Hl9PoAyLTJGE2EET6Ah/PzKPV/n6NnWtu/\nkIbb+uzWbj/p6+h2MfuDxmelvuYitSTeUW9tI7caswSgcD0bMRnnliQ1AoGAQDRc\nqbqCbPZCGPsyQRRMDsGQjHaCihkrc/Na4VRXtfiU7Ox3JfwENnziUnziBtEHbS7s\nUqrdlz21Fic7yJFKNFyGGSeA1K1ii5Xnd8+nSrPb+Jt/XzIkxEQ4wxtcOOte/dw+\n18VzdxgW+rK/soR2gzNtGOGmBncTt14l/beB3sECgYAAlvz3itNWYiB9R0+R6vUd\nC8ln45juraE82BkdShH+qOzVYOvSmWZYMRiuwsBECte1+hKJ5vVdHJyEJxnT4wb7\nAPOqQrSV0mW91yVprMDoPi7gynArHFPSAKLxMs+FRASNunmEVW0ps18V+wlWldXP\nd92nbEsxmA9IeXzKvwksuQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "farmassistdatabase@dotted-spot-440505-k9.iam.gserviceaccount.com",
+  "client_id": "107810732495534340267",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/farmassistdatabase%40dotted-spot-440505-k9.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
