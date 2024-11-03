@@ -1,6 +1,6 @@
 const { google } = require("googleapis");
 
-google_json_path = path.join(process.cwd(), 'google.json');
+google_json_path = "./google.json";
 
 async function getData(selector) {
     const auth = new google.auth.GoogleAuth({
