@@ -7,7 +7,7 @@ const account = require("./account.js");
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:5500',
+  origin: '*',
   credentials: true,
 };
 
