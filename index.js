@@ -30,14 +30,14 @@ app.get("/api", (req, res) => {
 });
 
 app.get("/api/login", async (req, res) => {
-    var body = req.body;
+    var params = req.params;
 
     var data = await database.getData("account-database");
 
     var status = account.matchAccount(
         data.values,
-        body.username,
-        body.password
+        params.username,
+        params.password
     );
 
     res.cookie("key", status.key);
