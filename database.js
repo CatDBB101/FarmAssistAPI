@@ -1,8 +1,10 @@
 const { google } = require("googleapis");
 
+google_json_path = path.join(process.cwd(), 'google.json');
+
 async function getData(selector) {
     const auth = new google.auth.GoogleAuth({
-        keyFile: path.join(__dirname, "./google.json"),
+        keyFile: google_json_path,
         scopes: "https://www.googleapis.com/auth/spreadsheets",
     });
 
@@ -23,7 +25,7 @@ async function getData(selector) {
 
 async function putData(selector, data) {
     const auth = new google.auth.GoogleAuth({
-        keyFile: path.join(__dirname, "./google.json"),
+        keyFile: google_json_path,
         scopes: "https://www.googleapis.com/auth/spreadsheets",
     });
 
