@@ -1,9 +1,17 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const cors = require('cors');
 const database = require("./database.js");
 const account = require("./account.js");
 
 const app = express();
+
+const corsOptions = {
+  origin: 'http://localhost:5500',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
