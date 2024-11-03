@@ -30,7 +30,9 @@ app.get("/api", (req, res) => {
 });
 
 app.get("/api/login", async (req, res) => {
-    var params = req.params;
+    var params = req.query;
+
+    console.log(params);
 
     var data = await database.getData("account-database");
 
