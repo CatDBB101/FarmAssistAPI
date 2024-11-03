@@ -42,7 +42,7 @@ app.get("/api/login", async (req, res) => {
         params.password
     );
 
-    res.cookie("key", status.key);
+    res.cookie("key", status.key, { maxAge: 900000, httpOnly: false });
     res.send(status);
 });
 
