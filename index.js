@@ -42,7 +42,14 @@ app.get("/api/login", async (req, res) => {
         params.password
     );
 
-    res.cookie("key", status.key, { maxAge: 900000, httpOnly: false });
+    res.cookie("key", status.key, {
+        maxAge: 900000,
+        httpOnly: true,
+        path: "/",
+        domain: "localhost",
+        secure: false,
+        sameSite: "lax",
+    });
     res.send(status);
 });
 
