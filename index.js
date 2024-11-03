@@ -1,7 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const database = require("./database.json");
-const account = require("./account.json");
+const database = require("./database.js");
+const account = require("./account.js");
 
 const app = express();
 
