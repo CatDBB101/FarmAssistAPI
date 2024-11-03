@@ -1,7 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const database = require("./database");
-const account = require("./account");
+const database = require(path.join(process.cwd(), "database.json"));
+const account = require(path.join(process.cwd(), "account.json"));
 
 const app = express();
 
