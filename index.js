@@ -38,7 +38,7 @@ app.get("/api/login", async (req, res) => {
 });
 
 app.put("/api/register", async (req, res) => {
-    var params = req.params;
+    var params = req.query;
     console.log(params)
 
     var key = account.generateKey();
