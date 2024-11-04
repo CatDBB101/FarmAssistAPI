@@ -1,17 +1,9 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-// const cors = require("cors");
 const database = require("./database.js");
 const account = require("./account.js");
 
 const app = express();
-
-// const corsOptions = {
-//     origin: "*",
-//     credentials: true,
-// };
-
-// app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*"); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
@@ -42,14 +34,6 @@ app.get("/api/login", async (req, res) => {
         params.password
     );
 
-    res.cookie("key", status.key, {
-        maxAge: 900000,
-        httpOnly: true,
-        path: "/",
-        domain: "localhost",
-        secure: false,
-        sameSite: "lax",
-    });
     res.send(status);
 });
 
@@ -68,8 +52,6 @@ app.put("/api/register", async (req, res) => {
             key,
         ]);
     }
-
-    res.cookie("key", key);
     res.send(status);
 });
 

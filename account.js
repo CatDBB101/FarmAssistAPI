@@ -1,6 +1,7 @@
 function matchAccount(account_database, username, password) {
     var res = {
         key: undefined,
+        username: undefined,
         status: {
             username: false,
             password: false,
@@ -15,6 +16,7 @@ function matchAccount(account_database, username, password) {
 
             if (password_correct) {
                 res.key = account[2];
+                res.username = account[0];
             }
             return;
         }
@@ -39,14 +41,16 @@ function generateKey() {
 function confirmCreate(account_database, username, key) {
     var res = {
         key: key,
+        username: username,
         status: {
             username: true,
         },
     };
     account_database.forEach((account) => {
         if (account[0] == username) {
-            res.status = false;
+            res.status.username = false;
             res.key = undefined;
+            res.username = undefined;
             return;
         }
     });
