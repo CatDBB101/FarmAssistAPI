@@ -38,17 +38,17 @@ app.get("/api/login", async (req, res) => {
 });
 
 app.put("/api/register", async (req, res) => {
-    var body = req.body;
+    var params = req.params;
 
     var key = account.generateKey();
 
     var data = await database.getData("account-database");
 
-    var status = account.confirmCreate(data.values, body.username, key);
+    var status = account.confirmCreate(data.values, params.username, key);
     if (status.status.username) {
         database.putData("account-database!A:C", [
-            body.username,
-            body.password,
+            params.username,
+            params.password,
             key,
         ]);
     }
