@@ -39,8 +39,8 @@ app.get("/api/login", async (req, res) => {
 
 app.put("/api/register", async (req, res) => {
     var params = req.query;
-    
-    console.log(params)
+
+    console.log(params);
 
     var key = account.generateKey();
 
@@ -55,6 +55,65 @@ app.put("/api/register", async (req, res) => {
         ]);
     }
     res.send(status);
+});
+
+async function createNode(key, node_name) {
+    sheet_name = "history-" + key + "-" + node_name;
+
+    await database.createSheet(sheet_name);
+    
+    await database.putData(sheet_name + "!A1:F1", [
+        "temperature",
+        "humidity",
+        "humidity soil",
+        "dust",
+        "light measure",
+        "rain measure",
+    ]);
+}
+
+app.post("/api/node/build", async (req, res) => {
+    var params = req.query;
+
+    console.log(params);
+
+    var data = await database.getData("node-name-database");
+
+    console.log(data);
+
+    var status = await account.confirmCreateNode(
+        data.values,
+        params.node_name,
+        params.key
+    );
+
+    if (status.status.node_name) {
+        database.putData("node-name-database!A:B", [
+            params.key,
+            params.node_name,
+        ]);
+
+        await createNode(params.key, params.node_name);
+    }
+
+    console.log(status);
+
+    res.send(status);
+});
+
+app.get("/api/node/list", async (req, res) => {
+    var params = req.query;
+
+    console.log(params);
+
+    var data = await database.getData("node-name-database");
+
+    console.log(data.values);
+
+    var node_list = account.nodeList(data.values, params.key)
+    console.log(node_list);
+
+    res.send(node_list);
 });
 
 const PORT = process.env.PORT || 4000;

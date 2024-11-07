@@ -57,4 +57,46 @@ function confirmCreate(account_database, username, key) {
     return res;
 }
 
-module.exports = { matchAccount, confirmCreate, generateKey };
+function confirmCreateNode(node_list, node_name, key) {
+    var res = {
+        status: {
+            node_name: true,
+        },
+    };
+
+    node_list.forEach((node_info) => {
+        if (node_info[0] == key) {
+            if (node_info[1] == node_name) {
+                res.status.node_name = false;
+                return;
+            }
+        }
+    });
+    return res;
+}
+
+function nodeList(nodes_name, key) {
+    var res = {
+        node_list: [],
+        status: {
+            key: true,
+        },
+    };
+    nodes_name.forEach((node_info) => {
+        if (node_info[0] == key) {
+            res.node_list.push(node_info[1]);
+        }
+    });
+    if (res.node_list.length === 0) {
+        res.status.key = false;
+    }
+    return res;
+}
+
+module.exports = {
+    matchAccount,
+    confirmCreate,
+    generateKey,
+    confirmCreateNode,
+    nodeList,
+};
