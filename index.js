@@ -6,7 +6,7 @@ const account = require("./account.js");
 const app = express();
 
 app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500"); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
+    res.setHeader("Access-Control-Allow-Origin", "*"); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     res.setHeader("Access-Control-Allow-Credentials", true);
@@ -61,7 +61,7 @@ async function createNode(key, node_name) {
     sheet_name = "history-" + key + "-" + node_name;
 
     await database.createSheet(sheet_name);
-    
+
     await database.putData(sheet_name + "!A1:F1", [
         "temperature",
         "humidity",
@@ -73,6 +73,11 @@ async function createNode(key, node_name) {
 }
 
 app.post("/api/node/build", async (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+
     var params = req.query;
 
     console.log(params);
@@ -110,7 +115,7 @@ app.get("/api/node/list", async (req, res) => {
 
     console.log(data.values);
 
-    var node_list = account.nodeList(data.values, params.key)
+    var node_list = account.nodeList(data.values, params.key);
     console.log(node_list);
 
     res.send(node_list);
