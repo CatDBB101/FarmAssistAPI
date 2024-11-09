@@ -2,19 +2,22 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const database = require("./database.js");
 const account = require("./account.js");
+const cors = require("cors");
 
 const app = express();
 
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*"); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.setHeader(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    res.setHeader("Access-Control-Allow-Credentials", true);
-    next();
-});
+app.use(cors({ origin: "http://localhost:5500", credentials: true }));
+
+// app.use((req, res, next) => {
+//     res.setHeader("Access-Control-Allow-Origin", "*"); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
+//     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//     res.setHeader(
+//         "Access-Control-Allow-Headers",
+//         "Origin, X-Requested-With, Content-Type, Accept"
+//     );
+//     res.setHeader("Access-Control-Allow-Credentials", true);
+//     next();
+// });
 
 app.use(cookieParser());
 
@@ -76,14 +79,6 @@ async function createNode(key, node_name) {
 }
 
 app.post("/api/node/build", async (req, res) => {
-    // res.setHeader("Access-Control-Allow-Origin", "*");
-    // res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    // res.setHeader(
-    //     "Access-Control-Allow-Headers",
-    //     "Origin, X-Requested-With, Content-Type, Accept"
-    // );
-    // res.setHeader("Access-Control-Allow-Credentials", true);
-
     var params = req.query;
 
     console.log(params);
