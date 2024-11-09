@@ -6,7 +6,7 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5500", credentials: true }));
+app.use(cors({ origin: "127.0.0.1:5500", credentials: true }));
 
 // app.use((req, res, next) => {
 //     res.setHeader("Access-Control-Allow-Origin", "*"); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
