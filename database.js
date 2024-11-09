@@ -1,19 +1,15 @@
 const { google } = require("googleapis");
 
 google_json_path = "./google.json";
+const auth = new google.auth.GoogleAuth({
+    keyFile: google_json_path,
+    scopes: "https://www.googleapis.com/auth/spreadsheets",
+});
+const client = auth.getClient();
+const googleSheets = google.sheets({ version: "v4", auth: client });
+const spreadsheetId = "1WgbkT7wN3tYMaeruVPw6l0GnuPDD1p4VmZIj8bApiME";
 
 async function getData(selector) {
-    const auth = new google.auth.GoogleAuth({
-        keyFile: google_json_path,
-        scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-
-    const client = await auth.getClient();
-
-    const googleSheets = google.sheets({ version: "v4", auth: client });
-
-    const spreadsheetId = "1WgbkT7wN3tYMaeruVPw6l0GnuPDD1p4VmZIj8bApiME";
-
     const data = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
@@ -24,17 +20,6 @@ async function getData(selector) {
 }
 
 async function putData(selector, data) {
-    const auth = new google.auth.GoogleAuth({
-        keyFile: google_json_path,
-        scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-
-    const client = await auth.getClient();
-
-    const googleSheets = google.sheets({ version: "v4", auth: client });
-
-    const spreadsheetId = "1WgbkT7wN3tYMaeruVPw6l0GnuPDD1p4VmZIj8bApiME";
-
     await googleSheets.spreadsheets.values.append({
         auth,
         spreadsheetId,
@@ -46,4 +31,28 @@ async function putData(selector, data) {
     });
 }
 
-module.exports = { getData, putData };
+async function createSheet(title) {
+    try {
+        const request = {
+            auth,
+            spreadsheetId: spreadsheetId,
+            resource: {
+                requests: [
+                    {
+                        addSheet: {
+                            properties: {
+                                title: title,
+                            },
+                        },
+                    },
+                ],
+            },
+        };
+
+        const response = await googleSheets.spreadsheets.batchUpdate(request);
+    } catch (err) {
+        console.log(title + " already use.")
+    }
+}
+
+module.exports = { getData, putData, createSheet };
