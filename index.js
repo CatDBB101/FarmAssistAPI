@@ -192,6 +192,8 @@ app.get("/api/node/data", async (req, res) => {
         var allData = await database.getData(sheet_name);
         console.log(allData.values);
 
+        allData = allData.shift()
+
         status.data = [];
 
         allData.values.forEach((dataSet) => {
