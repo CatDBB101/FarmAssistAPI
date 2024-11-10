@@ -194,7 +194,9 @@ app.get("/api/node/data", async (req, res) => {
 
         status.data = [];
 
-        allData.values.shift().forEach((dataSet) => {
+        allData.values.shift();
+
+        allData.values.forEach((dataSet) => {
             pushData = {};
             for (var i = 0; i < re_data.length; i++) {
                 pushData[re_data[i]] = dataSet[i];
