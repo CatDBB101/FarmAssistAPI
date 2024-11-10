@@ -175,6 +175,37 @@ app.get("/api/node/data/last", async (req, res) => {
     res.send(status);
 });
 
+app.get("/api/node/data", async (req, res) => {
+    console.log("GET - /api/node/data");
+
+    var params = req.query;
+    console.log(params);
+
+    var data = await database.getData("node-name-database");
+    console.log(data);
+
+    var status = account.confirmNode(data.values, params.node_name, params.key);
+    console.log(status);
+
+    if (status.status.found) {
+        var sheet_name = "history-" + params.key + "-" + params.node_name;
+        var allData = await database.getData(sheet_name);
+        console.log(allData.values);
+
+        status.data = [];
+
+        allData.values.forEach((dataSet) => {
+            pushData = {};
+            for (var i = 0; i < re_data.length; i++) {
+                pushData[re_data[i]] = dataSet[i];
+            }
+            status.data.push(pushData);
+        });
+    }
+
+    res.send(status);
+});
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
