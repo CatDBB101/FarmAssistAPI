@@ -93,10 +93,27 @@ function nodeList(nodes_name, key) {
     return res;
 }
 
+function confirmNode(nodes_name, node_name, key) {
+    var res = {
+        status: {
+            found: false,
+        },
+    };
+    nodes_name.forEach((node_info) => {
+        console.log(node_info);
+        if (node_info[0] == key && node_info[1] == node_name) {
+            res.status.found = true;
+        }
+    });
+
+    return res;
+}
+
 module.exports = {
     matchAccount,
     confirmCreate,
     generateKey,
     confirmCreateNode,
     nodeList,
+    confirmNode,
 };

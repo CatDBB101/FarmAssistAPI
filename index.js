@@ -8,28 +8,19 @@ const app = express();
 
 app.use(cors({ origin: "http://127.0.0.1:5500", credentials: true }));
 
-// app.use((req, res, next) => {
-//     res.setHeader("Access-Control-Allow-Origin", "*"); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
-//     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//     res.setHeader(
-//         "Access-Control-Allow-Headers",
-//         "Origin, X-Requested-With, Content-Type, Accept"
-//     );
-//     res.setHeader("Access-Control-Allow-Credentials", true);
-//     next();
-// });
-
 app.use(cookieParser());
 
 app.use(express.json());
 
 app.get("/api", (req, res) => {
+    console.log("GET - /api");
     res.send("Server is online...");
 });
 
 app.get("/api/login", async (req, res) => {
-    var params = req.query;
+    console.log("GET - /api/login");
 
+    var params = req.query;
     console.log(params);
 
     var data = await database.getData("account-database");
@@ -39,13 +30,15 @@ app.get("/api/login", async (req, res) => {
         params.username,
         params.password
     );
+    console.log(status);
 
     res.send(status);
 });
 
 app.put("/api/register", async (req, res) => {
-    var params = req.query;
+    console.log("PUT - /api/register");
 
+    var params = req.query;
     console.log(params);
 
     var key = account.generateKey();
@@ -60,6 +53,8 @@ app.put("/api/register", async (req, res) => {
             key,
         ]);
     }
+    console.log(status);
+
     res.send(status);
 });
 
@@ -76,11 +71,13 @@ async function createNode(key, node_name) {
         "light measure",
         "rain measure",
     ]);
+    console.log("Node Created.");
 }
 
 app.post("/api/node/build", async (req, res) => {
-    var params = req.query;
+    console.log("POST - /api/node/build");
 
+    var params = req.query;
     console.log(params);
 
     var data = await database.getData("node-name-database");
@@ -108,12 +105,12 @@ app.post("/api/node/build", async (req, res) => {
 });
 
 app.get("/api/node/list", async (req, res) => {
-    var params = req.query;
+    console.log("GET - /api/node/list");
 
+    var params = req.query;
     console.log(params);
 
     var data = await database.getData("node-name-database");
-
     console.log(data.values);
 
     var node_list = account.nodeList(data.values, params.key);

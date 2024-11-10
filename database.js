@@ -51,7 +51,7 @@ async function createSheet(title) {
 
         const response = await googleSheets.spreadsheets.batchUpdate(request);
     } catch (err) {
-        console.log(title + " already use.")
+        console.log(title + " already use.");
     }
 }
 
