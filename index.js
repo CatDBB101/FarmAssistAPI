@@ -192,11 +192,9 @@ app.get("/api/node/data", async (req, res) => {
         var allData = await database.getData(sheet_name);
         console.log(allData.values);
 
-        allData = allData.shift()
-
         status.data = [];
 
-        allData.values.forEach((dataSet) => {
+        allData.values.shift().forEach((dataSet) => {
             pushData = {};
             for (var i = 0; i < re_data.length; i++) {
                 pushData[re_data[i]] = dataSet[i];
