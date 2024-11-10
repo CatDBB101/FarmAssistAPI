@@ -63,7 +63,8 @@ async function createNode(key, node_name) {
 
     await database.createSheet(sheet_name);
 
-    await database.putData(sheet_name + "!A1:F1", [
+    await database.putData(sheet_name + "!A1:G1", [
+        "date",
         "temperature",
         "humidity",
         "humidity soil",
@@ -117,6 +118,61 @@ app.get("/api/node/list", async (req, res) => {
     console.log(node_list);
 
     res.send(node_list);
+});
+
+re_data = ["date", "temp", "humi", "soil_humi", "dust", "light", "rain"];
+
+app.put("/api/node/data", async (req, res) => {
+    console.log("PUT - /api/node/data");
+
+    var params = req.query;
+    console.log(params);
+
+    var data = await database.getData("node-name-database");
+    console.log(data.values);
+
+    var status = account.confirmNode(data.values, params.node_name, params.key);
+    console.log(status);
+
+    if (status.status.found) {
+        var adding_data = [];
+        re_data.forEach((_data) => {
+            adding_data.push(params[_data]);
+        });
+        sheet_name = "history-" + params.key + "-" + params.node_name;
+        selector = "!A:G";
+        database.putData(sheet_name + selector, adding_data);
+    }
+
+    res.send(status);
+});
+
+app.get("/api/node/data/last", async (req, res) => {
+    console.log("GET - /api/node/data/last");
+
+    var params = req.query;
+    console.log(params);
+
+    var data = await database.getData("node-name-database");
+    console.log(data);
+
+    var status = account.confirmNode(data.values, params.node_name, params.key);
+    console.log(status);
+
+    if (status.status.found) {
+        var sheet_name = "history-" + params.key + "-" + params.node_name;
+        var allData = await database.getData(sheet_name);
+        console.log(allData.values);
+
+        status.data = {};
+
+        lastData = allData.values[allData.values.length - 1];
+        for (var i = 0; i < re_data.length; i++) {
+            status.data[re_data[i]] = lastData[i];
+        }
+    }
+
+    res.send(status);
 });
 
 const PORT = process.env.PORT || 4000;
