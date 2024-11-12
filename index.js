@@ -6,7 +6,9 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors({ origin: "http://127.0.0.1:5500", credentials: true }));
+app.use(
+    cors({ origin: "https://farmassist-10caf.web.app", credentials: true })
+);
 
 app.use(cookieParser());
 
