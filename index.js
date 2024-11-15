@@ -11,7 +11,7 @@ const { reseller } = require("googleapis/build/src/apis/reseller/index.js");
 
 const app = express();
 
-var origin = "http://127.0.0.1:5500/"; // "https://farmassist-10caf.web.app"
+var origin = "http://127.0.0.1:5500"; // "https://farmassist-10caf.web.app"
 
 app.use(
     cors({
