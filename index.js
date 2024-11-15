@@ -3,6 +3,11 @@ const cookieParser = require("cookie-parser");
 const database = require("./database.js");
 const account = require("./account.js");
 const cors = require("cors");
+const analyze_water = require("./analyze_water.js");
+const analyze_fertilizer = require("./analyze_fertilizer.js");
+const analyze_environment = require("./analyze_environment.js");
+const { re, compositionDependencies } = require("mathjs");
+const { reseller } = require("googleapis/build/src/apis/reseller/index.js");
 
 const app = express();
 
@@ -208,6 +213,73 @@ app.get("/api/node/data", async (req, res) => {
     }
 
     res.send(status);
+});
+
+app.get("/api/analyze/water", async (req, res) => {
+    console.log("GET - /api/analyze/water");
+
+    var params = req.query;
+    console.log(params);
+
+    var vpd = analyze_water.calculateVPD(params.temp, params.humi);
+    var water_analyze_result = analyze_water.analyzeWateringNeeds(
+        vpd,
+        params.humi_soil,
+        params.humi_soil_limit || false,
+        params.high_vpd || false,
+        params.low_vpd || false
+    );
+    var response = {
+        vpd: vpd,
+        watering: water_analyze_result.watering,
+        recommendation: water_analyze_result.recommendation,
+    };
+    console.log(response);
+
+    res.send(response);
+});
+
+app.get("/api/analyze/fertilizer", async (req, res) => {
+    console.log("GET - /api/analyze/fertilizer");
+
+    var params = req.query;
+    console.log(params);
+
+    var result = analyze_fertilizer.fertilizerRecommendations(
+        params.plant_type
+    );
+    console.log(result);
+
+    res.send(result);
+});
+
+app.get("/api/analyze/environment", async (req, res) => {
+    console.log("GET - /api/analyze/environment");
+
+    var params = req.query;
+    console.log(params);
+
+    var result = analyze_environment.analyzeEnvironmentStatus(
+        (plantType = params.plant_type),
+        (temperature = params.temp),
+        (humidity = params.humi),
+        (soilMoisture = params.soil_humi),
+        (light = params.light),
+        (rain = params.rain)
+    ).thaiSummary;
+
+    var response = {
+        overall: result.status,
+        temp: result.details.temperature,
+        humi: result.details.humidity,
+        soil_humi: result.details.soilMoisture,
+        light: result.details.light,
+        rain: result.details.rain,
+    };
+
+    console.log(response);
+
+    res.send(response);
 });
 
 const PORT = process.env.PORT || 4000;
