@@ -12,7 +12,7 @@ const { reseller } = require("googleapis/build/src/apis/reseller/index.js");
 const app = express();
 
 app.use(
-    cors({ origin: "https://farmassist-10caf.web.app", credentials: true })
+    cors({ origin: process.env.URL || "http://127.0.0.1:5500/", credentials: true })
 );
 
 app.use(cookieParser());
