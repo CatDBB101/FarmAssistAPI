@@ -84,9 +84,9 @@ async function createNode(key, node_name) {
         "temperature",
         "humidity",
         "humidity soil",
-        "dust",
-        "light measure",
-        "rain measure",
+        "air pressure",
+        "altitude",
+        "light",
     ]);
     console.log("Node Created.");
 }
@@ -136,7 +136,15 @@ app.get("/api/node/list", async (req, res) => {
     res.send(node_list);
 });
 
-re_data = ["date", "temp", "humi", "soil_humi", "dust", "light", "rain"];
+re_data = [
+    "date",
+    "temp",
+    "humi",
+    "soil_humi",
+    "air_press",
+    "altitude",
+    "light",
+];
 
 app.put("/api/node/data", async (req, res) => {
     console.log("PUT - /api/node/data");
@@ -273,8 +281,7 @@ app.get("/api/analyze/environment", async (req, res) => {
         (temperature = params.temp),
         (humidity = params.humi),
         (soilMoisture = params.soil_humi),
-        (light = params.light),
-        (rain = params.rain)
+        (light = params.light)
     ).thaiSummary;
 
     var response = {
@@ -283,7 +290,6 @@ app.get("/api/analyze/environment", async (req, res) => {
         humi: result.details.humidity,
         soil_humi: result.details.soilMoisture,
         light: result.details.light,
-        rain: result.details.rain,
     };
 
     console.log(response);

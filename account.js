@@ -65,6 +65,7 @@ function confirmCreateNode(node_list, node_name, key) {
     };
 
     node_list.forEach((node_info) => {
+        console.log(node_info[0] + " " + node_info[1]);
         if (node_info[0] == key) {
             if (node_info[1] == node_name) {
                 res.status.node_name = false;

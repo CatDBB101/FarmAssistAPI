@@ -3,8 +3,7 @@ const analyzeEnvironmentStatus = (
     temperature,
     humidity,
     soilMoisture,
-    light,
-    rain
+    light
 ) => {
     // Define thresholds for the 10 popular Thai plants
     const plantThresholds = {
@@ -108,8 +107,6 @@ const analyzeEnvironmentStatus = (
             light >= thresholds.light.min && light <= thresholds.light.max
                 ? 1
                 : 0,
-        rain:
-            rain >= thresholds.rain.min && rain <= thresholds.rain.max ? 1 : 0,
     };
 
     // Summarize
@@ -133,7 +130,6 @@ const analyzeEnvironmentStatus = (
             ? "ความชื้นในดินเหมาะสม"
             : "ความชื้นในดินไม่เหมาะสม",
         light: advice.light ? "แสงสว่างเพียงพอ" : "แสงสว่างไม่เพียงพอ",
-        rain: advice.rain ? "ปริมาณฝนเหมาะสม" : "ปริมาณฝนไม่เหมาะสม",
     };
 
     return {
@@ -155,7 +151,6 @@ const exampleInput = {
     humidity: 70,
     soilMoisture: 60,
     light: 10,
-    rain: 1200,
 };
 
 console.log(
@@ -165,7 +160,6 @@ console.log(
         exampleInput.humidity,
         exampleInput.soilMoisture,
         exampleInput.light,
-        exampleInput.rain
     )
 );
 
