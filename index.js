@@ -108,9 +108,10 @@ app.post("/api/node/build", async (req, res) => {
     );
 
     if (status.status.node_name) {
-        database.putData("node-name-database!A:B", [
+        database.putData("node-name-database!A:C", [
             params.key,
             params.node_name,
+            params.plant_type,
         ]);
 
         await createNode(params.key, params.node_name);
@@ -291,6 +292,23 @@ app.get("/api/analyze/environment", async (req, res) => {
         soil_humi: result.details.soilMoisture,
         light: result.details.light,
     };
+
+    console.log(response);
+
+    res.send(response);
+});
+
+app.get("/api/node/plant_type", async (req, res) => {
+    console.log("GET - /api/node/data/plant_type");
+
+    var params = req.query;
+    console.log(params);
+
+    var data = await database.getData("node-name-database");
+
+    console.log(data.values);
+
+    var response = account.plantTypeList(data.values, params.key);
 
     console.log(response);
 

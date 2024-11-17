@@ -110,6 +110,24 @@ function confirmNode(nodes_name, node_name, key) {
     return res;
 }
 
+function plantTypeList(nodes_name, key) {
+    var res = {
+        plant_type_list: {},
+        status: {
+            key: true,
+        },
+    };
+    nodes_name.forEach((node_info) => {
+        if (node_info[0] == key) {
+            res.plant_type_list[node_info[1]] = node_info[2];
+        }
+    });
+    if (res.plant_type_list.length === 0) {
+        res.status.key = false;
+    }
+    return res;
+}
+
 module.exports = {
     matchAccount,
     confirmCreate,
@@ -117,4 +135,5 @@ module.exports = {
     confirmCreateNode,
     nodeList,
     confirmNode,
+    plantTypeList,
 };
