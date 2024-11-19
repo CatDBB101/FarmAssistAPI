@@ -24,6 +24,16 @@ app.use(
     })
 );
 
+// Middleware เพื่อรองรับ HTTP และ HTTPS
+app.use((req, res, next) => {
+  if (req.protocol === 'http') {
+    console.log('Accessed via HTTP');
+    // คุณสามารถปล่อยให้ HTTP ทำงาน หรือ redirect ไปที่ HTTPS (ถ้าต้องการ)
+    // return res.redirect(`https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
+
 app.use(cookieParser());
 
 app.use(express.json());
