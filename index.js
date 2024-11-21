@@ -6,7 +6,7 @@ const cors = require("cors");
 const analyze_water = require("./analyze_water.js");
 const analyze_fertilizer = require("./analyze_fertilizer.js");
 const analyze_environment = require("./analyze_environment.js");
-const { re, compositionDependencies } = require("mathjs");
+const { re, compositionDependencies, forEach } = require("mathjs");
 const { reseller } = require("googleapis/build/src/apis/reseller/index.js");
 
 const app = express();
@@ -174,10 +174,18 @@ app.put("/api/node/data", async (req, res) => {
     console.log(params);
 
     Object.keys(params).forEach((key) => {
-        put_data[key] = params[key];
+        if (key in re_data) {
+            put_data[key] = params[key];
+        }
     });
 
     console.log(put_data);
+    var have_non = false;
+    Object.values(put_data).forEach((val) => {
+        if (val == "NON") {
+            have_non = true;
+        }
+    });
     console.log(
         Object.values(put_data).some(
             (value) => typeof value === "NON" && value.includes(token)
@@ -191,11 +199,7 @@ app.put("/api/node/data", async (req, res) => {
     console.log(status);
 
     if (status.status.found) {
-        if (
-            Object.values(put_data).some(
-                (value) => typeof value === "NON" && value.includes(token)
-            )
-        ) {
+        if (!have_non) {
             var adding_data = [];
             re_data.forEach((_data) => {
                 adding_data.push(params[_data]);
