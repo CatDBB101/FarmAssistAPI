@@ -174,7 +174,7 @@ app.put("/api/node/data", async (req, res) => {
     console.log(params);
 
     Object.keys(params).forEach((key) => {
-        if (key in re_data) {
+        if (re_data.includes(key)) {
             put_data[key] = params[key];
         }
     });
@@ -208,6 +208,15 @@ app.put("/api/node/data", async (req, res) => {
             sheet_name = "history-" + params.key + "-" + params.node_name;
             selector = "!A:G";
             database.putData(sheet_name + selector, adding_data);
+            put_data = {
+                date: "NON",
+                temp: "NON",
+                humi: "NON",
+                soil_humi: "NON",
+                air_press: "NON",
+                altitude: "NON",
+                light: "NON",
+            };
         }
     }
 
