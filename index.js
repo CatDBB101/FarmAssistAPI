@@ -173,7 +173,7 @@ app.put("/api/node/data", async (req, res) => {
     var params = req.query;
     console.log(params);
 
-    Object.keys(params).forEach(key => {
+    Object.keys(params).forEach((key) => {
         put_data[key] = params[key];
     });
 
@@ -184,7 +184,11 @@ app.put("/api/node/data", async (req, res) => {
     console.log(status);
 
     if (status.status.found) {
-        if (!Object.values(put_data).includes("NON")) {
+        if (
+            Object.values(put_data).some(
+                (value) => typeof value === "NON" && value.includes(token)
+            )
+        ) {
             var adding_data = [];
             re_data.forEach((_data) => {
                 adding_data.push(params[_data]);
