@@ -46,7 +46,7 @@ function analyzeWateringNeeds(
             2
         )} kPa) อากาศมีความชื้นมาก ไม่ควรให้น้ำเวลานี้`;
     } else {
-        recommendation`สภาวะเหมาะสมที่สุด (${vpd.toFixed(
+        recommendation = `สภาวะเหมาะสมที่สุด (${vpd.toFixed(
             2
         )} kPa) รวมถึงความชื้นในดิน (${soilMoisture}%). ไม่ควรรดน้ำในเวลานี้`;
     }
