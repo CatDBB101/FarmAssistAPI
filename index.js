@@ -26,12 +26,12 @@ app.use(
 
 // Middleware เพื่อรองรับ HTTP และ HTTPS
 app.use((req, res, next) => {
-  if (req.protocol === 'http') {
-    console.log('Accessed via HTTP');
-    // คุณสามารถปล่อยให้ HTTP ทำงาน หรือ redirect ไปที่ HTTPS (ถ้าต้องการ)
-    // return res.redirect(`https://${req.headers.host}${req.url}`);
-  }
-  next();
+    if (req.protocol === "http") {
+        console.log("Accessed via HTTP");
+        // คุณสามารถปล่อยให้ HTTP ทำงาน หรือ redirect ไปที่ HTTPS (ถ้าต้องการ)
+        // return res.redirect(`https://${req.headers.host}${req.url}`);
+    }
+    next();
 });
 
 app.use(cookieParser());
@@ -157,6 +157,16 @@ re_data = [
     "light",
 ];
 
+var put_data = {
+    date: "NON",
+    temp: "NON",
+    humi: "NON",
+    soil_humi: "NON",
+    air_press: "NON",
+    altitude: "NON",
+    light: "NON",
+};
+
 app.put("/api/node/data", async (req, res) => {
     console.log("PUT - /api/node/data");
 
@@ -170,13 +180,15 @@ app.put("/api/node/data", async (req, res) => {
     console.log(status);
 
     if (status.status.found) {
-        var adding_data = [];
-        re_data.forEach((_data) => {
-            adding_data.push(params[_data]);
-        });
-        sheet_name = "history-" + params.key + "-" + params.node_name;
-        selector = "!A:G";
-        database.putData(sheet_name + selector, adding_data);
+        if (!Object.values(put_data).includes("NON")) {
+            var adding_data = [];
+            re_data.forEach((_data) => {
+                adding_data.push(params[_data]);
+            });
+            sheet_name = "history-" + params.key + "-" + params.node_name;
+            selector = "!A:G";
+            database.putData(sheet_name + selector, adding_data);
+        }
     }
 
     res.send(status);
@@ -325,7 +337,7 @@ app.get("/api/node/plant_type", async (req, res) => {
     res.send(response);
 });
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server is running on port ${PORT}`);
 });
