@@ -186,11 +186,12 @@ app.put("/api/node/data", async (req, res) => {
             have_non = true;
         }
     });
-    console.log(
-        Object.values(put_data).some(
-            (value) => typeof value === "NON" && value.includes(token)
-        )
-    );
+    console.log(have_non);
+    // console.log(
+    //     Object.values(put_data).some(
+    //         (value) => typeof value === "NON" && value.includes(token)
+    //     )
+    // );
 
     var data = await database.getData("node-name-database");
     console.log(data.values);
