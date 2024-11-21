@@ -173,6 +173,10 @@ app.put("/api/node/data", async (req, res) => {
     var params = req.query;
     console.log(params);
 
+    Object.keys(params).forEach(key => {
+        put_data[key] = params[key];
+    });
+
     var data = await database.getData("node-name-database");
     console.log(data.values);
 
