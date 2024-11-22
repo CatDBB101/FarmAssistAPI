@@ -6,8 +6,6 @@ const cors = require("cors");
 const analyze_water = require("./analyze_water.js");
 const analyze_fertilizer = require("./analyze_fertilizer.js");
 const analyze_environment = require("./analyze_environment.js");
-const { re, compositionDependencies, forEach } = require("mathjs");
-const { reseller } = require("googleapis/build/src/apis/reseller/index.js");
 
 const app = express();
 
@@ -201,13 +199,13 @@ app.put("/api/node/data", async (req, res) => {
 
     if (status.status.found) {
         if (!have_non) {
-            // var adding_data = [];
-            // re_data.forEach((_data) => {
-            //     adding_data.push(params[_data]);
-            // });
+            var adding_data = [];
+            re_data.forEach((put_data) => {
+                adding_data.push(params[_data]);
+            });
             sheet_name = "history-" + params.key + "-" + params.node_name;
             selector = "!A:G";
-            database.putData(sheet_name + selector, put_data);
+            database.putData(sheet_name + selector, adding_data);
             put_data = {
                 date: "NON",
                 temp: "NON",
