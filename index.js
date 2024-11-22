@@ -200,8 +200,8 @@ app.put("/api/node/data", async (req, res) => {
     if (status.status.found) {
         if (!have_non) {
             var adding_data = [];
-            re_data.forEach((put_data) => {
-                adding_data.push(params[_data]);
+            re_data.forEach((_data) => {
+                adding_data.push(put_data[_data]);
             });
             sheet_name = "history-" + params.key + "-" + params.node_name;
             selector = "!A:G";
