@@ -201,13 +201,13 @@ app.put("/api/node/data", async (req, res) => {
 
     if (status.status.found) {
         if (!have_non) {
-            var adding_data = [];
-            re_data.forEach((_data) => {
-                adding_data.push(params[_data]);
-            });
+            // var adding_data = [];
+            // re_data.forEach((_data) => {
+            //     adding_data.push(params[_data]);
+            // });
             sheet_name = "history-" + params.key + "-" + params.node_name;
             selector = "!A:G";
-            database.putData(sheet_name + selector, adding_data);
+            database.putData(sheet_name + selector, put_data);
             put_data = {
                 date: "NON",
                 temp: "NON",
