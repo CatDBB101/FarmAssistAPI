@@ -55,16 +55,16 @@ function analyzeWateringNeeds(
 }
 
 // Example Data (Replace with sensor input or API data)
-const temperature = 20; // Celsius
-const humidity = 40; // Percentage
-const soilMoisture = 20; // Percentage
+// const temperature = 20; // Celsius
+// const humidity = 40; // Percentage
+// const soilMoisture = 20; // Percentage
 
-// Analyze
-const vpd = calculateVPD(temperature, humidity);
-const recommendation = analyzeWateringNeeds(vpd, soilMoisture, 30, 1.5, 0.5);
+// // Analyze
+// const vpd = calculateVPD(temperature, humidity);
+// const recommendation = analyzeWateringNeeds(vpd, soilMoisture, 30, 1.5, 0.5);
 
-console.log(`VPD: ${vpd.toFixed(2)} kPa`);
-console.log(`Soil Moisture: ${soilMoisture}%`);
-console.log(`Recommendation: ${recommendation}`);
+// console.log(`VPD: ${vpd.toFixed(2)} kPa`);
+// console.log(`Soil Moisture: ${soilMoisture}%`);
+// console.log(`Recommendation: ${recommendation}`);
 
 module.exports = { calculateSVP, calculateVPD, analyzeWateringNeeds };

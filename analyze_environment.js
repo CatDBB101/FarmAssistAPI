@@ -145,23 +145,23 @@ const analyzeEnvironmentStatus = (
 };
 
 // Example usage
-const exampleInput = {
-    plantType: "Rice",
-    temperature: 30,
-    humidity: 70,
-    soilMoisture: 60,
-    light: 10,
-};
+// const exampleInput = {
+//     plantType: "Rice",
+//     temperature: 30,
+//     humidity: 70,
+//     soilMoisture: 60,
+//     light: 10,
+// };
 
-console.log(
-    analyzeEnvironmentStatus(
-        exampleInput.plantType,
-        exampleInput.temperature,
-        exampleInput.humidity,
-        exampleInput.soilMoisture,
-        exampleInput.light,
-    )
-);
+// console.log(
+//     analyzeEnvironmentStatus(
+//         exampleInput.plantType,
+//         exampleInput.temperature,
+//         exampleInput.humidity,
+//         exampleInput.soilMoisture,
+//         exampleInput.light,
+//     )
+// );
 
 module.exports = {
     analyzeEnvironmentStatus,

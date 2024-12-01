@@ -1,8 +1,10 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const database = require("./database.js");
-const account = require("./account.js");
 const cors = require("cors");
+
+const zip = require("./zip.js");
+const account = require("./account.js");
+const database = require("./database.js");
 const analyze_water = require("./analyze_water.js");
 const analyze_fertilizer = require("./analyze_fertilizer.js");
 const analyze_environment = require("./analyze_environment.js");
@@ -87,7 +89,7 @@ async function createNode(key, node_name) {
 
     await database.createSheet(sheet_name);
 
-    await database.putData(sheet_name + "!A1:G1", [
+    await database.putData(sheet_name + "!A1:H1", [
         "date",
         "temperature",
         "humidity",
@@ -95,6 +97,7 @@ async function createNode(key, node_name) {
         "air pressure",
         "altitude",
         "light",
+        "wind speed",
     ]);
     console.log("Node Created.");
 }
@@ -153,43 +156,14 @@ re_data = [
     "air_press",
     "altitude",
     "light",
+    "wind_speed",
 ];
-
-var put_data = {
-    date: "NON",
-    temp: "NON",
-    humi: "NON",
-    soil_humi: "NON",
-    air_press: "NON",
-    altitude: "NON",
-    light: "NON",
-};
 
 app.put("/api/node/data", async (req, res) => {
     console.log("PUT - /api/node/data");
 
     var params = req.query;
     console.log(params);
-
-    Object.keys(params).forEach((key) => {
-        if (re_data.includes(key)) {
-            put_data[key] = params[key];
-        }
-    });
-
-    console.log(put_data);
-    var have_non = false;
-    Object.values(put_data).forEach((val) => {
-        if (val == "NON") {
-            have_non = true;
-        }
-    });
-    console.log(have_non);
-    // console.log(
-    //     Object.values(put_data).some(
-    //         (value) => typeof value === "NON" && value.includes(token)
-    //     )
-    // );
 
     var data = await database.getData("node-name-database");
     console.log(data.values);
@@ -198,24 +172,13 @@ app.put("/api/node/data", async (req, res) => {
     console.log(status);
 
     if (status.status.found) {
-        if (!have_non) {
-            var adding_data = [];
-            re_data.forEach((_data) => {
-                adding_data.push(put_data[_data]);
-            });
-            sheet_name = "history-" + params.key + "-" + params.node_name;
-            selector = "!A:G";
-            database.putData(sheet_name + selector, adding_data);
-            put_data = {
-                date: "NON",
-                temp: "NON",
-                humi: "NON",
-                soil_humi: "NON",
-                air_press: "NON",
-                altitude: "NON",
-                light: "NON",
-            };
-        }
+        var adding_data = [];
+        re_data.forEach((_data) => {
+            adding_data.push(params[_data]);
+        });
+        sheet_name = "history-" + params.key + "-" + params.node_name;
+        selector = "!A:H";
+        database.putData(sheet_name + selector, adding_data);
     }
 
     res.send(status);
@@ -277,6 +240,11 @@ app.get("/api/node/data", async (req, res) => {
             }
             status.data.push(pushData);
         });
+
+        if (params.zip === "true") {
+            status.data = zip.zipObject(status.data);
+            console.log(status.data);
+        }
     }
 
     res.send(status);
