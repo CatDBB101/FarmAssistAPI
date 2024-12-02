@@ -1,4 +1,7 @@
 const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -10,8 +13,14 @@ const analyze_fertilizer = require("./analyze_fertilizer.js");
 const analyze_environment = require("./analyze_environment.js");
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+    },
+});
 
-var mode = process.env.mode;
+var mode = process.env.mode || "test";
 if (mode == "test") {
     var origin = "http://127.0.0.1:5500";
 } else if (mode == "deploy") {
@@ -332,7 +341,50 @@ app.get("/api/node/plant_type", async (req, res) => {
     res.send(response);
 });
 
+io.on("connection", (socket) => {
+    console.log("user connected");
+    socket.on("disconnect", () => {
+        console.log("user disconnected");
+    });
+
+    socket.on("live", (params) => {
+        setInterval(async () => {
+            console.log("params: " + params);
+            var key = params.key;
+            var node_name = params.node_name;
+            console.log(key);
+            console.log(node_name);
+
+            var data = await database.getData("node-name-database");
+            console.log(data);
+
+            var status = account.confirmNode(
+                data.values,
+                params.node_name,
+                params.key
+            );
+            console.log(status);
+
+            if (status.status.found) {
+                var sheet_name =
+                    "history-" + params.key + "-" + params.node_name;
+                var allData = await database.getData(sheet_name);
+                console.log(allData.values);
+
+                status.data = {};
+
+                lastData = allData.values[allData.values.length - 1];
+                for (var i = 0; i < re_data.length; i++) {
+                    status.data[re_data[i]] = lastData[i];
+                }
+            }
+
+            io.emit("live", status);
+        }, 2000);
+    });
+});
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, "0.0.0.0", () => {
+server.listen(PORT, "0.0.0.0", () => {
     console.log(`Server is running on port ${PORT}`);
 });
