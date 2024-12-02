@@ -380,7 +380,7 @@ io.on("connection", (socket) => {
             }
 
             io.emit("live", status);
-        }, 5000);
+        }, 10 * 1000);
     });
 });
 
