@@ -5,12 +5,13 @@ const { Server } = require("socket.io");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
-const zip = require("./zip.js");
+// const zip = require("./zip.js");
 const account = require("./account.js");
 const database = require("./database.js");
 const analyze_water = require("./analyze_water.js");
 const analyze_fertilizer = require("./analyze_fertilizer.js");
 const analyze_environment = require("./analyze_environment.js");
+const analyze_vpd = require("./analyze_vpd.js");
 
 const app = express();
 const server = http.createServer(app);
@@ -265,22 +266,17 @@ app.get("/api/analyze/water", async (req, res) => {
     var params = req.query;
     console.log(params);
 
-    var vpd = analyze_water.calculateVPD(params.temp, params.humi);
-    var water_analyze_result = analyze_water.analyzeWateringNeeds(
-        vpd,
-        params.humi_soil,
-        params.humi_soil_limit || false,
-        params.high_vpd || false,
-        params.low_vpd || false
+    var result = analyze_water.analyzeWateringNeeds(
+        params.temp,
+        params.soil_humi,
+        params.humi,
+        params.light,
+        params.crop_name
     );
-    var response = {
-        vpd: vpd,
-        watering: water_analyze_result.watering,
-        recommendation: water_analyze_result.recommendation,
-    };
-    console.log(response);
 
-    res.send(response);
+    console.log(result);
+
+    res.send(result);
 });
 
 app.get("/api/analyze/fertilizer", async (req, res) => {
@@ -303,25 +299,36 @@ app.get("/api/analyze/environment", async (req, res) => {
     var params = req.query;
     console.log(params);
 
-    var result = analyze_environment.analyzeEnvironmentStatus(
-        (plantType = params.plant_type),
-        (temperature = params.temp),
-        (humidity = params.humi),
-        (soilMoisture = params.soil_humi),
-        (light = params.light)
-    ).thaiSummary;
+    var result = analyze_environment.scoreEnvironment(params.crop_name, {
+        temp: params.temp,
+        humi: params.humi,
+        soil_humi: params.soil_humi,
+        light: params.light,
+        wind_speed: params.wind_speed,
+    });
 
-    var response = {
-        overall: result.status,
-        temp: result.details.temperature,
-        humi: result.details.humidity,
-        soil_humi: result.details.soilMoisture,
-        light: result.details.light,
-    };
+    console.log(result);
 
-    console.log(response);
+    res.send(result);
+});
 
-    res.send(response);
+app.get("/api/analyze", async (req, res) => {
+    console.log("GET - /api/analyze");
+
+    var params = req.query;
+    console.log(params);
+
+    var result_vpd = analyze_vpd.calculateVPD(params.temp, params.humi);
+
+    var result_water = analyze_water.analyzeWateringNeeds(
+        params.temp,
+        params.soil_humi,
+        params.humi,
+        params.light,
+        params.crop_name
+    );
+
+    res.send({ result_vpd: result_vpd, result_water: result_water });
 });
 
 app.get("/api/node/plant_type", async (req, res) => {

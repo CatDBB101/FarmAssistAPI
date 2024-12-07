@@ -1,168 +1,66 @@
-const analyzeEnvironmentStatus = (
-    plantType,
-    temperature,
-    humidity,
-    soilMoisture,
-    light
-) => {
-    // Define thresholds for the 10 popular Thai plants
-    const plantThresholds = {
-        Rice: {
-            temperature: { min: 20, max: 35 },
-            humidity: { min: 70, max: 90 },
-            soilMoisture: { min: 50, max: 80 },
-            light: { min: 8, max: 10 }, // Hours
-            rain: { min: 1000, max: 1500 },
-        },
-        Cassava: {
-            temperature: { min: 25, max: 35 },
-            humidity: { min: 50, max: 70 },
-            soilMoisture: { min: 30, max: 60 },
-            light: { min: 6, max: 8 }, // Hours
-            rain: { min: 800, max: 1200 },
-        },
-        Sugarcane: {
-            temperature: { min: 20, max: 35 },
-            humidity: { min: 60, max: 80 },
-            soilMoisture: { min: 40, max: 70 },
-            light: { min: 8, max: 12 }, // Hours
-            rain: { min: 1000, max: 1500 },
-        },
-        Maize: {
-            temperature: { min: 21, max: 30 },
-            humidity: { min: 60, max: 80 },
-            soilMoisture: { min: 40, max: 70 },
-            light: { min: 8, max: 10 }, // Hours
-            rain: { min: 500, max: 800 },
-        },
-        OilPalm: {
-            temperature: { min: 24, max: 30 },
-            humidity: { min: 70, max: 90 },
-            soilMoisture: { min: 50, max: 80 },
-            light: { min: 10, max: 12 }, // Hours
-            rain: { min: 1800, max: 2500 },
-        },
-        Rubber: {
-            temperature: { min: 25, max: 30 },
-            humidity: { min: 75, max: 90 },
-            soilMoisture: { min: 50, max: 75 },
-            light: { min: 8, max: 10 }, // Hours
-            rain: { min: 1500, max: 2000 },
-        },
-        Pineapple: {
-            temperature: { min: 22, max: 32 },
-            humidity: { min: 50, max: 70 },
-            soilMoisture: { min: 30, max: 60 },
-            light: { min: 6, max: 10 }, // Hours
-            rain: { min: 1000, max: 1500 },
-        },
-        Mango: {
-            temperature: { min: 25, max: 35 },
-            humidity: { min: 50, max: 70 },
-            soilMoisture: { min: 30, max: 60 },
-            light: { min: 8, max: 10 }, // Hours
-            rain: { min: 800, max: 1200 },
-        },
-        Durian: {
-            temperature: { min: 25, max: 35 },
-            humidity: { min: 70, max: 90 },
-            soilMoisture: { min: 50, max: 70 },
-            light: { min: 8, max: 10 }, // Hours
-            rain: { min: 1600, max: 2000 },
-        },
-        Longan: {
-            temperature: { min: 18, max: 32 },
-            humidity: { min: 50, max: 70 },
-            soilMoisture: { min: 40, max: 60 },
-            light: { min: 8, max: 10 }, // Hours
-            rain: { min: 1000, max: 1500 },
-        },
+const cropDatabase = require("./cropDatabase.json");
+
+function scoring(value, min, max, byTen = false) {
+    const middle = (min + max) / 2;
+    const distance = Math.abs(value - middle);
+    const maxScore = 100;
+    const maxDistance = (max - min) / 2;
+    let score = maxScore - (distance / maxDistance) * maxScore;
+    score = Math.max(score, 0);
+
+    if (byTen) {
+        score = Math.floor(score / 10);
+    }
+    return score;
+}
+
+/* 
+values = {
+    temp,
+    humi,
+    soil_humi,
+    light,
+    wind_speed,
+}
+*/
+data_require = ["temp", "humi", "soil_humi", "light", "wind_speed"];
+const scoreEnvironment = (cropName, values) => {
+    var cropDataset = cropDatabase[cropName];
+    // console.log(cropDataset);
+
+    var result = {
+        found: false,
     };
 
-    // Validate plant type
-    if (!plantThresholds[plantType]) {
-        throw new Error(`Plant type "${plantType}" is not recognized.`);
+    if (!cropDataset) {
+        return result;
     }
 
-    const thresholds = plantThresholds[plantType];
+    Object.keys(values).forEach((data_name) => {
+        var value = values[data_name];
+        var min = cropDataset[data_name].min;
+        var max = cropDataset[data_name].max;
 
-    // Evaluate conditions
-    const advice = {
-        temperature:
-            temperature >= thresholds.temperature.min &&
-            temperature <= thresholds.temperature.max
-                ? 1
-                : 0,
-        humidity:
-            humidity >= thresholds.humidity.min &&
-            humidity <= thresholds.humidity.max
-                ? 1
-                : 0,
-        soilMoisture:
-            soilMoisture >= thresholds.soilMoisture.min &&
-            soilMoisture <= thresholds.soilMoisture.max
-                ? 1
-                : 0,
-        light:
-            light >= thresholds.light.min && light <= thresholds.light.max
-                ? 1
-                : 0,
-    };
+        // console.log(value, min, max);
 
-    // Summarize
-    const totalScore = Object.values(advice).reduce(
-        (sum, value) => sum + value,
-        0
-    );
-    const status =
-        totalScore === 5
-            ? "เหมาะสมที่สุด"
-            : totalScore >= 3
-            ? "ค่อนข้างเหมาะสม"
-            : "ไม่เหมาะสม";
+        result[data_name] = scoring(value, min, max, (byTen = true));
+    });
 
-    const thaiAdvice = {
-        temperature: advice.temperature
-            ? "อุณหภูมิเหมาะสม"
-            : "อุณหภูมิไม่เหมาะสม",
-        humidity: advice.humidity ? "ความชื้นเหมาะสม" : "ความชื้นไม่เหมาะสม",
-        soilMoisture: advice.soilMoisture
-            ? "ความชื้นในดินเหมาะสม"
-            : "ความชื้นในดินไม่เหมาะสม",
-        light: advice.light ? "แสงสว่างเพียงพอ" : "แสงสว่างไม่เพียงพอ",
-    };
-
-    return {
-        numericalSummary: {
-            score: totalScore,
-            advice,
-        },
-        thaiSummary: {
-            status,
-            details: thaiAdvice,
-        },
-    };
+    result.found = true;
+    return result;
 };
 
-// Example usage
-// const exampleInput = {
-//     plantType: "Rice",
-//     temperature: 30,
-//     humidity: 70,
-//     soilMoisture: 60,
-//     light: 10,
-// };
-
+// Example
 // console.log(
-//     analyzeEnvironmentStatus(
-//         exampleInput.plantType,
-//         exampleInput.temperature,
-//         exampleInput.humidity,
-//         exampleInput.soilMoisture,
-//         exampleInput.light,
-//     )
+//     scoreEnvironment("Rice", {
+//         temp: 30,
+//         humi: 75,
+//         soil_humi: 70,
+//         light: 20000,
+//         wind_speed: 15,
+//     })
 // );
 
 module.exports = {
-    analyzeEnvironmentStatus,
+    scoreEnvironment,
 };

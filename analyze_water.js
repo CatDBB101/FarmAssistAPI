@@ -1,70 +1,102 @@
-const { recommender_v1beta1 } = require("googleapis");
-const math = require("mathjs");
-
-const CONSTANT_A = 0.61078; // In kPa
-const CONSTANT_B = 17.27;
-const CONSTANT_C = 237.3;
-
-function calculateSVP(temperature) {
-    return (
-        CONSTANT_A *
-        Math.exp((CONSTANT_B * temperature) / (temperature + CONSTANT_C))
-    );
-}
-
-function calculateVPD(temperature, humidity) {
-    const svp = calculateSVP(temperature);
-    const actualVP = (humidity / 100) * svp;
-    return svp - actualVP;
-}
+const e = require("express");
+const cropDatabase = require("./cropDatabase.json");
 
 function analyzeWateringNeeds(
-    vpd,
-    soilMoisture,
-    soil_misture_limit,
-    high_vpd,
-    low_vpd
+    temperature,
+    soilHumidity,
+    humidity,
+    light,
+    cropName
 ) {
-    const moistureThreshold = parseFloat(soil_misture_limit || 30); // Default: 30%
-    const highVPDThreshold = parseFloat(high_vpd || 1.5); // Default: 1.5 kPa
-    const lowVPDThreshold = parseFloat(low_vpd || 0.5); // Default: 0.5 kPa
+    var result = {
+        found: false,
+        water: undefined,
+        amount: undefined,
+        unit: undefined,
+    };
 
-    var recommendation = "";
-    var watering = false;
-
-    if (soilMoisture < moistureThreshold) {
-        if (vpd > highVPDThreshold) {
-            recommendation = `ค่า VPD สูง (${vpd.toFixed(
-                2
-            )} kPa) และ ความชื้นในดินต่ำ (${soilMoisture}%) ควรรดน้ำตอนนี้`;
-            watering = true;
-        } else {
-            recommendation = `ค่า VPD ต่ำ (${soilMoisture}%) ควรรดน้ำในเร็วๆนี้`;
-        }
-    } else if (vpd < lowVPDThreshold) {
-        recommendation = `ค่า VPD ต่ำ (${vpd.toFixed(
-            2
-        )} kPa) อากาศมีความชื้นมาก ไม่ควรให้น้ำเวลานี้`;
-    } else {
-        recommendation = `สภาวะเหมาะสมที่สุด (${vpd.toFixed(
-            2
-        )} kPa) รวมถึงความชื้นในดิน (${soilMoisture}%). ไม่ควรรดน้ำในเวลานี้`;
+    // Get plant thresholds
+    const cropDataset = cropDatabase[cropName];
+    if (!cropDataset) {
+        console.log("Invalid plant type");
+        return result;
     }
 
-    return { watering: watering, recommendation: recommendation };
+    result.found = true;
+
+    console.log(cropDataset);
+
+    const advice_temp = cropDataset.temp;
+    const advice_light = cropDataset.light;
+    const advice_humi = cropDataset.humi;
+    const advice_soil_humi = cropDataset.soil_humi;
+
+    const baseWater = cropDataset.base_water;
+
+    // Check if watering is needed based on soil moisture
+    if (soilHumidity < advice_soil_humi.min) {
+        // Adjust the water amount based on environmental factors
+
+        // Temperature Factor
+        let temperatureFactor = 1.0;
+        if (temperature < advice_temp.min) {
+            temperatureFactor = 0.8; // Less water needed below 20°C
+        } else if (temperature > advice_temp.max) {
+            temperatureFactor = 1.2; // More water needed above 35°C
+        }
+
+        // Light Factor
+        let lightFactor = 1.0;
+        if (light < advice_light.min) {
+            lightFactor = 0.8; // Less water needed for low light
+        } else if (light > advice_light.max) {
+            lightFactor = 1.5; // More water needed for high light
+        }
+
+        // Humidity Factor
+        let humidityFactor = 1.0;
+        if (humidity < advice_humi.min) {
+            humidityFactor = 1.2; // More water needed for low humidity
+        } else if (humidity > advice_humi.max) {
+            humidityFactor = 0.8; // Less water needed for high humidity
+        }
+
+        // Calculate the final water amount
+        var waterAmount = Number(
+            (
+                baseWater *
+                temperatureFactor *
+                lightFactor *
+                humidityFactor
+            ).toFixed(2)
+        );
+        if (waterAmount < 1) {
+            waterAmount = waterAmount * 1000;
+            result.unit = "milliliter";
+        } else {
+            result.unit = "liter";
+        }
+
+        result.water = true;
+        result.raw_amount = Number(
+            (
+                baseWater *
+                temperatureFactor *
+                lightFactor *
+                humidityFactor
+            ).toFixed(2)
+        );
+        result.amount = waterAmount;
+        result.unit = "liter";
+    } else {
+        result.water = false;
+    }
+
+    return result;
 }
 
-// Example Data (Replace with sensor input or API data)
-// const temperature = 20; // Celsius
-// const humidity = 40; // Percentage
-// const soilMoisture = 20; // Percentage
+// Example
+// var result = analyzeWateringNeeds(10, 10, 10, 10, "Rice");
+// console.log(result);
 
-// // Analyze
-// const vpd = calculateVPD(temperature, humidity);
-// const recommendation = analyzeWateringNeeds(vpd, soilMoisture, 30, 1.5, 0.5);
-
-// console.log(`VPD: ${vpd.toFixed(2)} kPa`);
-// console.log(`Soil Moisture: ${soilMoisture}%`);
-// console.log(`Recommendation: ${recommendation}`);
-
-module.exports = { calculateSVP, calculateVPD, analyzeWateringNeeds };
+module.exports = { analyzeWateringNeeds };
