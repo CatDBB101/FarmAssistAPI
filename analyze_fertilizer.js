@@ -1,91 +1,80 @@
-function fertilizerRecommendations(treeType) {
-    const recommendations = {
-        Rice: {
-            Nitrogen:
-                "ไนโตรเจน: 60–120 กก./เฮกตาร์ (แบ่ง: 50% ตอนปลูก, 25% ตอนแตกกอ, 25% ตอนเริ่มออกดอก)",
-            Phosphorus: "ฟอสฟอรัส: 30–60 กก./เฮกตาร์ ตอนปลูก",
-            Potassium:
-                "โพแทสเซียม: 30–60 กก./เฮกตาร์ (แบ่ง: ครึ่งหนึ่งตอนปลูก, ครึ่งหนึ่งตอนเริ่มออกดอก)",
-            Method: "วิธีการ: หว่านปุ๋ยให้ทั่วและไถกลบลงดินระหว่างเตรียมพื้นที่.",
-        },
-        Cassava: {
-            Nitrogen: "ไนโตรเจน: 60–100 กก./เฮกตาร์",
-            Phosphorus: "ฟอสฟอรัส: 20–50 กก./เฮกตาร์",
-            Potassium: "โพแทสเซียม: 80–120 กก./เฮกตาร์",
-            Method: "วิธีการ: ใส่ปุ๋ยในร่องห่างจากโคนต้น 10–15 ซม. และกลบลงดิน.",
-        },
-        Sugarcane: {
-            Nitrogen:
-                "ไนโตรเจน: 100–200 กก./เฮกตาร์ (แบ่ง: ครึ่งหนึ่งตอนปลูก, ครึ่งหนึ่งตอนเริ่มต้นการเจริญเติบโต)",
-            Phosphorus: "ฟอสฟอรัส: 60–80 กก./เฮกตาร์ ตอนปลูก",
-            Potassium:
-                "โพแทสเซียม: 120–160 กก./เฮกตาร์ (แบ่ง: ครึ่งหนึ่งตอนปลูก, ครึ่งหนึ่งตอนเริ่มต้นการเจริญเติบโต)",
-            Method: "วิธีการ: ใส่ปุ๋ยในร่องใกล้ลำอ้อยแล้วกลบด้วยดิน.",
-        },
-        Maize: {
-            Nitrogen:
-                "ไนโตรเจน: 80–150 กก./เฮกตาร์ (แบ่ง: หนึ่งในสามตอนปลูก, ที่เหลือตอนระยะใบ 4–6 ใบ)",
-            Phosphorus: "ฟอสฟอรัส: 40–60 กก./เฮกตาร์ ตอนปลูก",
-            Potassium: "โพแทสเซียม: 40–60 กก./เฮกตาร์ ตอนปลูก",
-            Method: "วิธีการ: ใส่ปุ๋ยในร่องห่างจากเมล็ด 5 ซม. และลึก 5 ซม.",
-        },
-        "Oil Palm": {
-            Nitrogen: "ไนโตรเจน: 120–150 กก./เฮกตาร์/ปี",
-            Phosphorus: "ฟอสฟอรัส: 40–60 กก./เฮกตาร์/ปี",
-            Potassium: "โพแทสเซียม: 120–150 กก./เฮกตาร์/ปี",
-            Method: "วิธีการ: หว่านปุ๋ยรอบโคนต้นในวงที่กำจัดวัชพืช.",
-        },
-        Rubber: {
-            Nitrogen: "ไนโตรเจน: 25–50 กก./เฮกตาร์/ปี",
-            Phosphorus: "ฟอสฟอรัส: 25–50 กก./เฮกตาร์/ปี",
-            Potassium: "โพแทสเซียม: 25–50 กก./เฮกตาร์/ปี",
-            Method: "วิธีการ: หว่านปุ๋ยรอบๆ พื้นที่ใต้ทรงพุ่มและกลบลงดิน.",
-        },
-        Pineapple: {
-            Nitrogen: "ไนโตรเจน: 300–400 กก./เฮกตาร์/ปี (แบ่งใส่หลายครั้ง)",
-            Phosphorus: "ฟอสฟอรัส: 50–100 กก./เฮกตาร์/ปี",
-            Potassium: "โพแทสเซียม: 400–600 กก./เฮกตาร์/ปี (แบ่งใส่หลายครั้ง)",
-            Method: "วิธีการ: ใส่ปุ๋ยในร่องห่างจากโคนต้น 15–20 ซม.",
-        },
-        Mango: {
-            Nitrogen:
-                "ไนโตรเจน: 100–200 กรัมต่อต้น/ปี (ต้นเล็ก); 500–1000 กรัมต่อต้น/ปี (ต้นใหญ่)",
-            Phosphorus:
-                "ฟอสฟอรัส: 50–100 กรัมต่อต้น/ปี (ต้นเล็ก); 250–500 กรัมต่อต้น/ปี (ต้นใหญ่)",
-            Potassium:
-                "โพแทสเซียม: 100–200 กรัมต่อต้น/ปี (ต้นเล็ก); 500–1000 กรัมต่อต้น/ปี (ต้นใหญ่)",
-            Method: "วิธีการ: ใส่ปุ๋ยรอบทรงพุ่มต้นในลักษณะวงกลม.",
-        },
-        Durian: {
-            Nitrogen:
-                "ไนโตรเจน: 100–200 กรัมต่อต้น/ปี (ต้นเล็ก); 500–1000 กรัมต่อต้น/ปี (ต้นใหญ่)",
-            Phosphorus:
-                "ฟอสฟอรัส: 50–100 กรัมต่อต้น/ปี (ต้นเล็ก); 250–500 กรัมต่อต้น/ปี (ต้นใหญ่)",
-            Potassium:
-                "โพแทสเซียม: 100–200 กรัมต่อต้น/ปี (ต้นเล็ก); 500–1000 กรัมต่อต้น/ปี (ต้นใหญ่)",
-            Method: "วิธีการ: ใส่ปุ๋ยรอบทรงพุ่มต้นในลักษณะวงกลม.",
-        },
-        Longan: {
-            Nitrogen:
-                "ไนโตรเจน: 100–200 กรัมต่อต้น/ปี (ต้นเล็ก); 300–600 กรัมต่อต้น/ปี (ต้นใหญ่)",
-            Phosphorus:
-                "ฟอสฟอรัส: 50–100 กรัมต่อต้น/ปี (ต้นเล็ก); 150–300 กรัมต่อต้น/ปี (ต้นใหญ่)",
-            Potassium:
-                "โพแทสเซียม: 100–200 กรัมต่อต้น/ปี (ต้นเล็ก); 300–600 กรัมต่อต้น/ปี (ต้นใหญ่)",
-            Method: "วิธีการ: ใส่ปุ๋ยรอบทรงพุ่มต้นในลักษณะวงกลม.",
-        },
+const cropDatabase = require("./cropDatabase.json");
+
+function analyzeFertilizer(
+    cropName,
+    temp,
+    humi,
+    soil_humi,
+    light,
+    gram = false
+) {
+    var result = {
+        found: false,
+        n: 0,
+        p: 0,
+        k: 0,
+        stress_score: 0,
     };
 
-    return (
-        recommendations[treeType] ||
-        "ไม่พบประเภทต้นไม้ กรุณาตรวจสอบข้อมูลอีกครั้ง."
-    );
+    // Get plant thresholds
+    const cropDataset = cropDatabase[cropName];
+    if (!cropDataset) {
+        console.log("Invalid plant type");
+        return result;
+    }
+
+    result.found = true;
+
+    console.log(cropDataset);
+
+    const advice_temp = cropDataset.temp;
+    const advice_light = cropDataset.light;
+    const advice_humi = cropDataset.humi;
+    const advice_soil_humi = cropDataset.soil_humi;
+
+    var stress_score = 0;
+
+    if (temp < advice_temp.min || temp > advice_temp.max) {
+        stress_score += 1;
+    }
+
+    if (humi < advice_humi.min || humi > advice_humi.max) {
+        stress_score += 1;
+    }
+
+    if (soil_humi < advice_soil_humi.min || soil_humi > advice_soil_humi.max) {
+        stress_score += 1;
+    }
+
+    if (light < advice_light.min || light > advice_light.max) {
+        stress_score += 1;
+    }
+
+    var base_n = (cropDataset.N.max + cropDataset.N.min) / 2;
+    var base_p = (cropDataset.P.max + cropDataset.P.min) / 2;
+    var base_k = (cropDataset.K.max + cropDataset.K.min) / 2;
+
+    var fertilizer_factor = 1.0 + stress_score * 0.1;
+
+    result.n = base_n * fertilizer_factor;
+    result.p = base_p * fertilizer_factor;
+    result.k = base_k * fertilizer_factor;
+
+    if (gram) {
+        result.n = Math.floor(result.n * 100);
+        result.p = Math.floor(result.p * 100);
+        result.k = Math.floor(result.k * 100);
+    }
+
+    result.stress_score = stress_score;
+
+    return result;
 }
 
-// Example usage:
-// console.log(fertilizerRecommendations("Rice"));
-// console.log(fertilizerRecommendations("Durian"));
+// Example
+// var result = analyzeFertilizer("Rice", 10, 10, 10, 10, (gram = true));
+// console.log(result);
 
 module.exports = {
-    fertilizerRecommendations,
+    analyzeFertilizer,
 };

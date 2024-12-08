@@ -5,6 +5,9 @@
         "soil_humi": { "min": 60, "max": 80 },
         "light": { "min": 10000, "max": 30000 },
         "wind_speed": { "min": 0, "max": 25 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 40, "max": 60 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1
     },
     "Wheat": {
@@ -13,6 +16,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 120, "max": 180 },
+        "P": { "min": 40, "max": 60 },
+        "K": { "min": 150, "max": 180 },
         "base_water": 0.6
     },
     "Corn": {
@@ -21,6 +27,9 @@
         "soil_humi": { "min": 60, "max": 80 },
         "light": { "min": 20000, "max": 40000 },
         "wind_speed": { "min": 15, "max": 30 },
+        "N": { "min": 200, "max": 250 },
+        "P": { "min": 60, "max": 100 },
+        "K": { "min": 200, "max": 250 },
         "base_water": 1.75
     },
     "Barley": {
@@ -29,6 +38,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 30, "max": 50 },
+        "K": { "min": 100, "max": 150 },
         "base_water": 0.6
     },
     "Oats": {
@@ -37,6 +49,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 12000 },
         "wind_speed": { "min": 10, "max": 25 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 30, "max": 50 },
+        "K": { "min": 120, "max": 150 },
         "base_water": 0.65
     },
     "Soybean": {
@@ -45,6 +60,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 15000, "max": 25000 },
         "wind_speed": { "min": 10, "max": 25 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 40, "max": 70 },
+        "K": { "min": 100, "max": 150 },
         "base_water": 1
     },
     "Sorghum": {
@@ -53,6 +71,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 10000, "max": 30000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 80 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1
     },
     "Millet": {
@@ -61,6 +82,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 10000, "max": 30000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 30, "max": 50 },
+        "K": { "min": 100, "max": 150 },
         "base_water": 0.8
     },
     "Rye": {
@@ -69,6 +93,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 120, "max": 180 },
+        "P": { "min": 40, "max": 60 },
+        "K": { "min": 150, "max": 180 },
         "base_water": 0.75
     },
     "Quinoa": {
@@ -77,6 +104,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 25 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 30, "max": 50 },
+        "K": { "min": 100, "max": 150 },
         "base_water": 0.55
     },
     "Potato": {
@@ -85,6 +115,9 @@
         "soil_humi": { "min": 60, "max": 80 },
         "light": { "min": 5000, "max": 12000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 80 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1
     },
     "Tomato": {
@@ -93,6 +126,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 15000, "max": 30000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1.15
     },
     "Onion": {
@@ -101,6 +137,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 80, "max": 120 },
+        "P": { "min": 40, "max": 60 },
+        "K": { "min": 100, "max": 150 },
         "base_water": 0.65
     },
     "Garlic": {
@@ -109,6 +148,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 10000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 80, "max": 120 },
+        "P": { "min": 40, "max": 60 },
+        "K": { "min": 100, "max": 150 },
         "base_water": 0.55
     },
     "Ginger": {
@@ -116,7 +158,10 @@
         "humi": { "min": 70, "max": 85 },
         "soil_humi": { "min": 60, "max": 80 },
         "light": { "min": 5000, "max": 15000 },
-        "wind_speed": { "min": 10, "max": null },
+        "wind_speed": { "min": 0, "max": 10 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 80 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1
     },
     "Turmeric": {
@@ -124,7 +169,10 @@
         "humi": { "min": 70, "max": 85 },
         "soil_humi": { "min": 60, "max": 80 },
         "light": { "min": 5000, "max": 15000 },
-        "wind_speed": { "min": 10, "max": null },
+        "wind_speed": { "min": 0, "max": 10 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 80 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1
     },
     "Carrot": {
@@ -133,6 +181,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 10000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 50, "max": 80 },
+        "P": { "min": 30, "max": 50 },
+        "K": { "min": 100, "max": 150 },
         "base_water": 0.6
     },
     "Spinach": {
@@ -141,6 +192,9 @@
         "soil_humi": { "min": 60, "max": 80 },
         "light": { "min": 10000, "max": 20000 },
         "wind_speed": { "min": 10, "max": 15 },
+        "N": { "min": 80, "max": 120 },
+        "P": { "min": 40, "max": 60 },
+        "K": { "min": 100, "max": 150 },
         "base_water": 0.75
     },
     "Kale": {
@@ -149,6 +203,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 0.75
     },
     "Lettuce": {
@@ -157,6 +214,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 10000, "max": 20000 },
         "wind_speed": { "min": 10, "max": 15 },
+        "N": { "min": 50, "max": 70 },
+        "P": { "min": 30, "max": 50 },
+        "K": { "min": 50, "max": 100 },
         "base_water": 0.75
     },
     "Cabbage": {
@@ -165,6 +225,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 12000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 0.85
     },
     "Broccoli": {
@@ -173,6 +236,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 0.75
     },
     "Cauliflower": {
@@ -181,6 +247,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 0.75
     },
     "Eggplant": {
@@ -189,6 +258,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 10000, "max": 25000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1.5
     },
     "Zucchini": {
@@ -197,6 +269,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 15000, "max": 25000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1.25
     },
     "Cucumber": {
@@ -205,6 +280,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 15000, "max": 30000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1.5
     },
     "Pumpkin": {
@@ -213,6 +291,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 10000, "max": 20000 },
         "wind_speed": { "min": 10, "max": 25 },
+        "N": { "min": 200, "max": 250 },
+        "P": { "min": 60, "max": 100 },
+        "K": { "min": 200, "max": 250 },
         "base_water": 1.75
     },
     "Squash": {
@@ -221,6 +302,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 10000, "max": 20000 },
         "wind_speed": { "min": 10, "max": 25 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1.75
     },
     "Bell Pepper": {
@@ -229,6 +313,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 15000, "max": 30000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1.15
     },
     "Chili": {
@@ -237,6 +324,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 10000, "max": 25000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 1.15
     },
     "Mango": {
@@ -245,6 +335,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 20000, "max": 50000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 200, "max": 300 },
+        "P": { "min": 50, "max": 100 },
+        "K": { "min": 300, "max": 400 },
         "base_water": 2.25
     },
     "Papaya": {
@@ -253,6 +346,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 20000, "max": 50000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 150, "max": 250 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 200, "max": 300 },
         "base_water": 2
     },
     "Banana": {
@@ -261,6 +357,9 @@
         "soil_humi": { "min": 60, "max": 80 },
         "light": { "min": 20000, "max": 50000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 300, "max": 400 },
+        "P": { "min": 100, "max": 150 },
+        "K": { "min": 300, "max": 500 },
         "base_water": 2.25
     },
     "Pineapple": {
@@ -269,6 +368,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 10000, "max": 30000 },
         "wind_speed": { "min": 10, "max": 25 },
+        "N": { "min": 50, "max": 100 },
+        "P": { "min": 30, "max": 60 },
+        "K": { "min": 100, "max": 150 },
         "base_water": 2
     },
     "Orange": {
@@ -277,6 +379,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 15000, "max": 40000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 200, "max": 300 },
+        "P": { "min": 80, "max": 100 },
+        "K": { "min": 250, "max": 350 },
         "base_water": 2
     },
     "Lemon": {
@@ -285,6 +390,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 15000, "max": 40000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 80 },
+        "K": { "min": 200, "max": 300 },
         "base_water": 2
     },
     "Lime": {
@@ -293,6 +401,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 15000, "max": 40000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 40, "max": 70 },
+        "K": { "min": 150, "max": 250 },
         "base_water": 2
     },
     "Grapefruit": {
@@ -301,6 +412,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 15000, "max": 40000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 200, "max": 300 },
+        "P": { "min": 70, "max": 100 },
+        "K": { "min": 250, "max": 350 },
         "base_water": 2
     },
     "Apple": {
@@ -309,6 +423,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 5000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 100, "max": 200 },
+        "P": { "min": 40, "max": 80 },
+        "K": { "min": 150, "max": 250 },
         "base_water": 0.75
     },
     "Pear": {
@@ -317,6 +434,9 @@
         "soil_humi": { "min": 60, "max": 70 },
         "light": { "min": 5000, "max": 10000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 100, "max": 200 },
+        "P": { "min": 40, "max": 80 },
+        "K": { "min": 150, "max": 250 },
         "base_water": 0.6
     },
     "Plum": {
@@ -325,6 +445,9 @@
         "soil_humi": { "min": 60, "max": 70 },
         "light": { "min": 5000, "max": 10000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 0.5
     },
     "Peach": {
@@ -333,6 +456,9 @@
         "soil_humi": { "min": 60, "max": 70 },
         "light": { "min": 5000, "max": 10000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 50, "max": 80 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 0.6
     },
     "Cherry": {
@@ -341,6 +467,9 @@
         "soil_humi": { "min": 60, "max": 70 },
         "light": { "min": 5000, "max": 10000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 50, "max": 70 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 0.5
     },
     "Grape": {
@@ -349,6 +478,9 @@
         "soil_humi": { "min": 60, "max": 70 },
         "light": { "min": 10000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 30 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 60, "max": 100 },
+        "K": { "min": 150, "max": 250 },
         "base_water": 0.6
     },
     "Strawberry": {
@@ -357,6 +489,9 @@
         "soil_humi": { "min": 70, "max": 80 },
         "light": { "min": 3000, "max": 7000 },
         "wind_speed": { "min": 10, "max": 25 },
+        "N": { "min": 50, "max": 100 },
+        "P": { "min": 30, "max": 50 },
+        "K": { "min": 100, "max": 150 },
         "base_water": 0.35
     },
     "Blueberry": {
@@ -365,6 +500,9 @@
         "soil_humi": { "min": 60, "max": 80 },
         "light": { "min": 3000, "max": 7000 },
         "wind_speed": { "min": 10, "max": 25 },
+        "N": { "min": 30, "max": 50 },
+        "P": { "min": 10, "max": 20 },
+        "K": { "min": 80, "max": 150 },
         "base_water": 0.35
     },
     "Raspberry": {
@@ -373,6 +511,9 @@
         "soil_humi": { "min": 60, "max": 80 },
         "light": { "min": 3000, "max": 7000 },
         "wind_speed": { "min": 10, "max": 25 },
+        "N": { "min": 100, "max": 150 },
+        "P": { "min": 40, "max": 60 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 0.35
     },
     "Watermelon": {
@@ -381,6 +522,9 @@
         "soil_humi": { "min": 50, "max": 70 },
         "light": { "min": 10000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 20 },
+        "N": { "min": 150, "max": 200 },
+        "P": { "min": 60, "max": 100 },
+        "K": { "min": 150, "max": 200 },
         "base_water": 0.9
     },
     "Coconut": {
@@ -389,6 +533,9 @@
         "soil_humi": { "min": 80, "max": 90 },
         "light": { "min": 5000, "max": 8000 },
         "wind_speed": { "min": 10, "max": 40 },
+        "N": { "min": 200, "max": 250 },
+        "P": { "min": 50, "max": 80 },
+        "K": { "min": 200, "max": 300 },
         "base_water": 1.25
     },
     "Sugarcane": {
@@ -397,6 +544,9 @@
         "soil_humi": { "min": 70, "max": 80 },
         "light": { "min": 10000, "max": 15000 },
         "wind_speed": { "min": 10, "max": 40 },
+        "N": { "min": 200, "max": 300 },
+        "P": { "min": 60, "max": 120 },
+        "K": { "min": 300, "max": 400 },
         "base_water": 1.75
     }
 }

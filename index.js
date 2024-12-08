@@ -404,7 +404,7 @@ io.on("connection", (socket) => {
         disconnectRoom(clientRoomConnect[socket.id]);
         delete clientRoomConnect[socket.id];
 
-        console.log("leaveLiveId")
+        console.log("leaveLiveId");
         console.log(socket.id);
         console.log(liveInterval);
         console.log(clientRoomConnect);
@@ -469,6 +469,16 @@ io.on("connection", (socket) => {
                                 lastData[re_data.indexOf("wind_speed")]
                             ),
                         });
+
+                    status.result.fertilizer =
+                        analyze_fertilizer.analyzeFertilizer(
+                            params.crop_name,
+                            Number(lastData[re_data.indexOf("temp")]),
+                            Number(lastData[re_data.indexOf("humi")]),
+                            Number(lastData[re_data.indexOf("soil_humi")]),
+                            Number(lastData[re_data.indexOf("light")]),
+                            (gram = true)
+                        );
 
                     status.result.vpd = analyze_vpd.calculateVPD(
                         Number(lastData[re_data.indexOf("temp")]),

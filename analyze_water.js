@@ -1,4 +1,3 @@
-const e = require("express");
 const cropDatabase = require("./cropDatabase.json");
 
 function analyzeWateringNeeds(
