@@ -351,12 +351,14 @@ app.get("/api/node/plant_type", async (req, res) => {
 io.on("connection", (socket) => {
     console.log(socket.handshake.query);
     socket.join(socket.handshake.query.key);
-    console.log("rooms:", socket.rooms);
+    console.log("rooms:", io.sockets.adapter.rooms);
 
     let intervalId;
 
     console.log("user connected:", socket.id);
     socket.on("disconnect", () => {
+        console.log(io.sockets.adapter.rooms);
+
         clearInterval(intervalId);
         console.log("user disconnected");
     });
