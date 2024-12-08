@@ -397,6 +397,19 @@ io.on("connection", (socket) => {
         console.log(clientRoomConnect);
     });
 
+    socket.on("leaveLiveId", () => {
+        console.log(io.sockets.adapter.rooms);
+
+        socket.leave(clientRoomConnect[socket.id]);
+        disconnectRoom(clientRoomConnect[socket.id]);
+        delete clientRoomConnect[socket.id];
+
+        console.log("leaveLiveId")
+        console.log(socket.id);
+        console.log(liveInterval);
+        console.log(clientRoomConnect);
+    });
+
     socket.on("live", (params) => {
         var room_name = params.key + ":" + params.node_name;
 
