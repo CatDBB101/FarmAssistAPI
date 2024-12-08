@@ -395,12 +395,33 @@ io.on("connection", (socket) => {
                     status.data[re_data[i]] = lastData[i];
                 }
 
+                console.log("lastData:", lastData);
+                console.log(re_data.indexOf("temp"));
+
                 status.result.water = analyze_water.analyzeWateringNeeds(
-                    lastData.temp,
-                    lastData.soil_humi,
-                    lastData.humi,
-                    lastData.light,
+                    Number(lastData[re_data.indexOf("temp")]),
+                    Number(lastData[re_data.indexOf("soil_humi")]),
+                    Number(lastData[re_data.indexOf("humi")]),
+                    Number(lastData[re_data.indexOf("light")]),
                     params.crop_name
+                );
+
+                status.result.environment =
+                    analyze_environment.scoreEnvironment(params.crop_name, {
+                        temp: Number(lastData[re_data.indexOf("temp")]),
+                        humi: Number(lastData[re_data.indexOf("humi")]),
+                        soil_humi: Number(
+                            lastData[re_data.indexOf("soil_humi")]
+                        ),
+                        light: Number(lastData[re_data.indexOf("light")]),
+                        wind_speed: Number(
+                            lastData[re_data.indexOf("wind_speed")]
+                        ),
+                    });
+
+                status.result.vpd = analyze_vpd.calculateVPD(
+                    Number(lastData[re_data.indexOf("temp")]),
+                    Number(lastData[re_data.indexOf("humi")])
                 );
             }
 
