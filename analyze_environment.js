@@ -36,6 +36,7 @@ const scoreEnvironment = (cropName, values) => {
         return result;
     }
 
+    var sum=0;    
     Object.keys(values).forEach((data_name) => {
         var value = values[data_name];
         var min = cropDataset[data_name].min;
@@ -43,8 +44,12 @@ const scoreEnvironment = (cropName, values) => {
 
         // console.log(value, min, max);
 
-        result[data_name] = scoring(value, min, max, (byTen = true));
+        var cal_result = scoring(value, min, max, (byTen = true));
+        result[data_name] = cal_result;
+
+        sum+=cal_result;    
     });
+    result.overall = sum/data_require.length;
 
     result.found = true;
     return result;
