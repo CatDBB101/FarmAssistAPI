@@ -349,13 +349,20 @@ app.get("/api/node/plant_type", async (req, res) => {
 });
 
 io.on("connection", (socket) => {
-    console.log("user connected");
+    console.log(socket.handshake.query);
+    socket.join(socket.handshake.query.key);
+    console.log("rooms:", socket.rooms);
+
+    let intervalId;
+
+    console.log("user connected:", socket.id);
     socket.on("disconnect", () => {
+        clearInterval(intervalId);
         console.log("user disconnected");
     });
 
     socket.on("live", (params) => {
-        setInterval(async () => {
+        intervalId = setInterval(async () => {
             console.log("params: " + params);
             var key = params.key;
             var node_name = params.node_name;
@@ -379,15 +386,24 @@ io.on("connection", (socket) => {
                 console.log(allData.values);
 
                 status.data = {};
+                status.result = {};
 
                 lastData = allData.values[allData.values.length - 1];
                 for (var i = 0; i < re_data.length; i++) {
                     status.data[re_data[i]] = lastData[i];
                 }
+
+                status.result.water = analyze_water.analyzeWateringNeeds(
+                    lastData.temp,
+                    lastData.soil_humi,
+                    lastData.humi,
+                    lastData.light,
+                    params.crop_name
+                );
             }
 
-            io.emit("live", status);
-        }, (process.env.live_delay || 2) * 1000);
+            io.to(params.key).emit("live", status);
+        }, (process.env.live_delay || 5) * 1000);
     });
 });
 
