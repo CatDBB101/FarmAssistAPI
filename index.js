@@ -348,85 +348,134 @@ app.get("/api/node/plant_type", async (req, res) => {
     res.send(response);
 });
 
+var clientRoomConnect = {
+    /* 
+    id : room
+    */
+};
+var liveInterval = {};
+
+function disconnectRoom(room_name) {
+    let clientsInRoom = io.sockets.adapter.rooms.get(room_name);
+    if (!clientsInRoom || clientsInRoom.size < 1) {
+        clearInterval(liveInterval[room_name]);
+        delete liveInterval[room_name];
+    }
+}
+
 io.on("connection", (socket) => {
     console.log(socket.handshake.query);
-    socket.join(socket.handshake.query.key);
+    // socket.join(
+    //     socket.handshake.query.key + ":" + socket.handshake.query.node_name
+    // );
     console.log("rooms:", io.sockets.adapter.rooms);
-
-    let intervalId;
 
     console.log("user connected:", socket.id);
     socket.on("disconnect", () => {
         console.log(io.sockets.adapter.rooms);
 
-        clearInterval(intervalId);
-        console.log("user disconnected");
+        disconnectRoom(clientRoomConnect[socket.id]);
+        delete clientRoomConnect[socket.id];
+
+        console.log(liveInterval);
+        console.log(clientRoomConnect);
+        console.log("user disconnected:", socket.id);
+    });
+
+    socket.on("leaveLive", (params) => {
+        var room_name = params.key + ":" + params.node_name;
+        var room = room_name;
+
+        console.log("leaveJoin:", room);
+
+        socket.leave(room);
+        disconnectRoom(room_name);
+        delete clientRoomConnect[socket.id];
+
+        console.log(io.sockets.adapter.rooms);
+        console.log(liveInterval);
+        console.log(clientRoomConnect);
     });
 
     socket.on("live", (params) => {
-        intervalId = setInterval(async () => {
-            console.log("params: " + params);
-            var key = params.key;
-            var node_name = params.node_name;
-            console.log(key);
-            console.log(node_name);
+        var room_name = params.key + ":" + params.node_name;
 
-            var data = await database.getData("node-name-database");
-            console.log(data);
+        if (!io.sockets.adapter.rooms.get(room_name)) {
+            // Never create
+            liveInterval[room_name] = setInterval(async () => {
+                console.log("params: " + params);
+                var key = params.key;
+                var node_name = params.node_name;
+                console.log(key);
+                console.log(node_name);
 
-            var status = account.confirmNode(
-                data.values,
-                params.node_name,
-                params.key
-            );
-            console.log(status);
+                var data = await database.getData("node-name-database");
+                console.log(data);
 
-            if (status.status.found) {
-                var sheet_name =
-                    "history-" + params.key + "-" + params.node_name;
-                var allData = await database.getData(sheet_name);
-                console.log(allData.values);
+                var status = account.confirmNode(
+                    data.values,
+                    params.node_name,
+                    params.key
+                );
+                console.log(status);
 
-                status.data = {};
-                status.result = {};
+                if (status.status.found) {
+                    var sheet_name =
+                        "history-" + params.key + "-" + params.node_name;
+                    var allData = await database.getData(sheet_name);
+                    console.log(allData.values);
 
-                lastData = allData.values[allData.values.length - 1];
-                for (var i = 0; i < re_data.length; i++) {
-                    status.data[re_data[i]] = lastData[i];
+                    status.data = {};
+                    status.result = {};
+
+                    lastData = allData.values[allData.values.length - 1];
+                    for (var i = 0; i < re_data.length; i++) {
+                        status.data[re_data[i]] = lastData[i];
+                    }
+
+                    console.log("lastData:", lastData);
+                    console.log(re_data.indexOf("temp"));
+
+                    status.result.water = analyze_water.analyzeWateringNeeds(
+                        Number(lastData[re_data.indexOf("temp")]),
+                        Number(lastData[re_data.indexOf("soil_humi")]),
+                        Number(lastData[re_data.indexOf("humi")]),
+                        Number(lastData[re_data.indexOf("light")]),
+                        params.crop_name
+                    );
+
+                    status.result.environment =
+                        analyze_environment.scoreEnvironment(params.crop_name, {
+                            temp: Number(lastData[re_data.indexOf("temp")]),
+                            humi: Number(lastData[re_data.indexOf("humi")]),
+                            soil_humi: Number(
+                                lastData[re_data.indexOf("soil_humi")]
+                            ),
+                            light: Number(lastData[re_data.indexOf("light")]),
+                            wind_speed: Number(
+                                lastData[re_data.indexOf("wind_speed")]
+                            ),
+                        });
+
+                    status.result.vpd = analyze_vpd.calculateVPD(
+                        Number(lastData[re_data.indexOf("temp")]),
+                        Number(lastData[re_data.indexOf("humi")])
+                    );
+
+                    // var client_list = Array.from(
+                    //     io.sockets.adapter.rooms.get(room_name)
+                    // );
+                    // console.log("room_name:", room_name, client_list);
+                    console.log(io.sockets.adapter.rooms);
+                    console.log(liveInterval);
+                    console.log(clientRoomConnect);
                 }
 
-                console.log("lastData:", lastData);
-                console.log(re_data.indexOf("temp"));
-
-                status.result.water = analyze_water.analyzeWateringNeeds(
-                    Number(lastData[re_data.indexOf("temp")]),
-                    Number(lastData[re_data.indexOf("soil_humi")]),
-                    Number(lastData[re_data.indexOf("humi")]),
-                    Number(lastData[re_data.indexOf("light")]),
-                    params.crop_name
-                );
-
-                status.result.environment =
-                    analyze_environment.scoreEnvironment(params.crop_name, {
-                        temp: Number(lastData[re_data.indexOf("temp")]),
-                        humi: Number(lastData[re_data.indexOf("humi")]),
-                        soil_humi: Number(
-                            lastData[re_data.indexOf("soil_humi")]
-                        ),
-                        light: Number(lastData[re_data.indexOf("light")]),
-                        wind_speed: Number(
-                            lastData[re_data.indexOf("wind_speed")]
-                        ),
-                    });
-
-                status.result.vpd = analyze_vpd.calculateVPD(
-                    Number(lastData[re_data.indexOf("temp")]),
-                    Number(lastData[re_data.indexOf("humi")])
-                );
-            }
-
-            io.to(params.key).emit("live", status);
-        }, (process.env.live_delay || 5) * 1000);
+                io.to(room_name).emit("live", status);
+            }, (process.env.live_delay || 5) * 1000);
+        }
+        socket.join(room_name);
+        clientRoomConnect[socket.id] = room_name;
     });
 });
 
