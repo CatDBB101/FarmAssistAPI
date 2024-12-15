@@ -181,6 +181,12 @@ app.put("/api/node/data", async (req, res) => {
     var status = account.confirmNode(data.values, params.node_name, params.key);
     console.log(status);
 
+    if (params.date == "time") {
+        let datetime = new Date();
+        params.date = datetime.toLocaleString("th-TH", "Thailand/Bangkok");
+        console.log(params.date);
+    }
+
     if (status.status.found) {
         var adding_data = [];
         re_data.forEach((_data) => {
@@ -193,6 +199,43 @@ app.put("/api/node/data", async (req, res) => {
 
     res.send(status);
 });
+
+test_status = {
+    "date" : "date",
+    "temp" : "temp",
+    "humi" : "humi",
+    "soil_humi" : "soil_humi",
+    "air_press" : "air_press",
+    "altitude" : "altitude",
+    "light" : "light",
+    "wind_speed" : "wind_speed",
+};
+
+app.put("/test/node/data", async (req, res) => {
+    console.log("PUT - /test/node/data");
+
+    var params = req.query;
+    console.log(params);
+
+    var data = await database.getData("node-name-database");
+    console.log(data.values);
+
+    var status = account.confirmNode(data.values, params.node_name, params.key);
+    console.log(status);
+
+    // if (status.status.found) {
+    //     var adding_data = [];
+    //     re_data.forEach((_data) => {
+    //         adding_data.push(params[_data]);
+    //     });
+    //     sheet_name = "history-" + params.key + "-" + params.node_name;
+    //     selector = "!A:H";
+    //     database.putData(sheet_name + selector, adding_data);
+    // }
+
+    res.send(status);
+});
+
 
 app.get("/api/node/data/last", async (req, res) => {
     console.log("GET - /api/node/data/last");
@@ -499,6 +542,11 @@ io.on("connection", (socket) => {
         }
         socket.join(room_name);
         clientRoomConnect[socket.id] = room_name;
+    });
+
+    socket.on("live/test", () => {
+        console.log("live/test", test_status);
+        io.emit("live/test", test_status);
     });
 });
 
