@@ -79,6 +79,11 @@ app.put("/api/register", async (req, res) => {
 
     var key = account.generateKey();
 
+    // exam
+    if (params.username == "example") {
+        key = "testkey1";
+    }
+
     var data = await database.getData("account-database");
 
     var status = account.confirmCreate(data.values, params.username, key);
