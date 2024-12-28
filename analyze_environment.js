@@ -36,8 +36,9 @@ const scoreEnvironment = (cropName, values) => {
         return result;
     }
 
-    var sum=0;    
+    var sum = 0;
     Object.keys(values).forEach((data_name) => {
+        if (data_name == "ph") {return;}
         var value = values[data_name];
         var min = cropDataset[data_name].min;
         var max = cropDataset[data_name].max;
@@ -47,9 +48,12 @@ const scoreEnvironment = (cropName, values) => {
         var cal_result = scoring(value, min, max, (byTen = true));
         result[data_name] = cal_result;
 
-        sum+=cal_result;    
+        sum += cal_result;
     });
-    result.overall = sum/data_require.length;
+    result.overall = sum / data_require.length;
+
+    // ph
+    result["ph"] = scoring(values.ph, 5.9, 7.1, (byTen = true));
 
     result.found = true;
     return result;
@@ -63,6 +67,7 @@ const scoreEnvironment = (cropName, values) => {
 //         soil_humi: 70,
 //         light: 20000,
 //         wind_speed: 15,
+//         ph: 6
 //     })
 // );
 

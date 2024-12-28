@@ -112,7 +112,7 @@ async function createNode(key, node_name) {
         "air pressure",
         "altitude",
         "light",
-        "wind speed",
+        "ph",
     ]);
     console.log("Node Created.");
 }
@@ -171,7 +171,7 @@ re_data = [
     "air_press",
     "altitude",
     "light",
-    "wind_speed",
+    "ph",
 ];
 
 app.put("/api/node/data", async (req, res) => {
@@ -353,6 +353,7 @@ app.get("/api/analyze/environment", async (req, res) => {
         soil_humi: params.soil_humi,
         light: params.light,
         wind_speed: params.wind_speed,
+        ph: params.ph
     });
 
     console.log(result);
