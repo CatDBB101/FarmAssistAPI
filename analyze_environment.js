@@ -23,7 +23,7 @@ values = {
     wind_speed,
 }
 */
-data_require = ["temp", "humi", "soil_humi", "light", "wind_speed"];
+data_require = ["temp", "humi", "soil_humi", "light", "ph"];
 const scoreEnvironment = (cropName, values) => {
     var cropDataset = cropDatabase[cropName];
     // console.log(cropDataset);
