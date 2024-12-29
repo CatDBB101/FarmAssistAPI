@@ -514,8 +514,8 @@ io.on("connection", (socket) => {
                                 lastData[re_data.indexOf("soil_humi")]
                             ),
                             light: Number(lastData[re_data.indexOf("light")]),
-                            wind_speed: Number(
-                                lastData[re_data.indexOf("wind_speed")]
+                            ph: Number(
+                                lastData[re_data.indexOf("ph")]
                             ),
                         });
 
