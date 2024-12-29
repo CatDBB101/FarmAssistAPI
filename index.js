@@ -23,7 +23,7 @@ const io = new Server(server, {
 
 var mode = process.env.mode || "test";
 if (mode == "test") {
-    var origin = "http://localhost:5500";//"http://127.0.0.1:5500";
+    var origin = "http://localhost:5500"; //"http://127.0.0.1:5500";
 } else if (mode == "deploy") {
     var origin = "https://farmassist-10caf.web.app";
 }
@@ -206,14 +206,14 @@ app.put("/api/node/data", async (req, res) => {
 });
 
 test_status = {
-    "date" : "date",
-    "temp" : "temp",
-    "humi" : "humi",
-    "soil_humi" : "soil_humi",
-    "air_press" : "air_press",
-    "altitude" : "altitude",
-    "light" : "light",
-    "wind_speed" : "wind_speed",
+    date: "date",
+    temp: "temp",
+    humi: "humi",
+    soil_humi: "soil_humi",
+    air_press: "air_press",
+    altitude: "altitude",
+    light: "light",
+    wind_speed: "wind_speed",
 };
 
 app.put("/test/node/data", async (req, res) => {
@@ -240,7 +240,6 @@ app.put("/test/node/data", async (req, res) => {
 
     res.send(status);
 });
-
 
 app.get("/api/node/data/last", async (req, res) => {
     console.log("GET - /api/node/data/last");
@@ -353,7 +352,7 @@ app.get("/api/analyze/environment", async (req, res) => {
         soil_humi: params.soil_humi,
         light: params.light,
         wind_speed: params.wind_speed,
-        ph: params.ph
+        ph: params.ph,
     });
 
     console.log(result);
@@ -514,10 +513,11 @@ io.on("connection", (socket) => {
                                 lastData[re_data.indexOf("soil_humi")]
                             ),
                             light: Number(lastData[re_data.indexOf("light")]),
-                            ph: Number(
-                                lastData[re_data.indexOf("ph")]
-                            ),
+                            ph: Number(lastData[re_data.indexOf("ph")]),
                         });
+                    status.data.overall = analyze_environment.overall_word(
+                        status.result.environment.overall
+                    );
 
                     status.result.fertilizer =
                         analyze_fertilizer.analyzeFertilizer(

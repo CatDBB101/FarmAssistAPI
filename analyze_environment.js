@@ -9,9 +9,28 @@ function scoring(value, min, max, byTen = false) {
     score = Math.max(score, 0);
 
     if (byTen) {
+        0;
         score = Math.floor(score / 10);
     }
     return score;
+}
+
+function overall_word(overall_score) {
+    if (overall_score == 0) {
+        return "แย่มาก";
+    } else if (overall_score >= 1 && overall_score <= 2) {
+        return "แย่";
+    } else if (overall_score >= 3 && overall_score <= 4) {
+        return "ค่อนข้างแย่";
+    } else if (overall_score == 5) {
+        return "ปานกลาง";
+    } else if (overall_score >= 6 && overall_score <= 7) {
+        return "ค่อนข้างดี";
+    } else if (overall_score >= 8 && overall_score <= 9) {
+        return "ดี";
+    } else if (overall_score == 10) {
+        return "ดีมาก";
+    }
 }
 
 /* 
@@ -38,7 +57,9 @@ const scoreEnvironment = (cropName, values) => {
 
     var sum = 0;
     Object.keys(values).forEach((data_name) => {
-        if (data_name == "ph") {return;}
+        if (data_name == "ph") {
+            return;
+        }
         var value = values[data_name];
         var min = cropDataset[data_name].min;
         var max = cropDataset[data_name].max;
@@ -73,4 +94,5 @@ const scoreEnvironment = (cropName, values) => {
 
 module.exports = {
     scoreEnvironment,
+    overall_word,
 };
