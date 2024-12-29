@@ -23,7 +23,7 @@ const io = new Server(server, {
 
 var mode = process.env.mode || "test";
 if (mode == "test") {
-    var origin = "http://127.0.0.1:5500";
+    var origin = "http://localhost:5500";//"http://127.0.0.1:5500";
 } else if (mode == "deploy") {
     var origin = "https://farmassist-10caf.web.app";
 }
