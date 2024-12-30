@@ -71,10 +71,65 @@ function analyzeFertilizer(
     return result;
 }
 
+function analyzeFertilizerV2(crop_name, npkValues) {
+    // ค่าเกณฑ์มาตรฐานของ NPK ในหน่วย mg/kg
+    const cropDataset = cropDatabase[crop_name];
+    const standardValues = {
+        nitrogen: cropDataset.Nmgkg,
+        phosphorus: cropDataset.Pmgkg,
+        potassium: cropDataset.Kmgkg,
+    };
+
+    // console.log(npkValues);
+    // console.log(standardValues);
+
+    // อัตราส่วนปุ๋ยที่แนะนำสำหรับการเพิ่ม NPK
+    const fertilizerRatio = {
+        nitrogen: 10, // หน่วยกิโลกรัม/ไร่
+        phosphorus: 5, // หน่วยกิโลกรัม/ไร่
+        potassium: 7, // หน่วยกิโลกรัม/ไร่
+    };
+
+    // คำนวณคำแนะนำสำหรับแต่ละธาตุอาหาร
+    const recommendation = {};
+
+    for (const nutrient in standardValues) {
+        const measuredValue = npkValues[nutrient];
+        const standardValue = standardValues[nutrient];
+
+        if (measuredValue < standardValue) {
+            const deficit = standardValue - measuredValue;
+            recommendation[nutrient] = {
+                deficit,
+                fertilizerAmount:
+                    (deficit / standardValue) * fertilizerRatio[nutrient], // คำนวณปริมาณปุ๋ยที่ต้องใส่
+            };
+        } else {
+            recommendation[nutrient] = {
+                deficit: 0,
+                fertilizerAmount: 0,
+            };
+        }
+    }
+
+    return recommendation;
+}
+
+// ตัวอย่างการใช้งาน
+// const measuredNPK = {
+//     nitrogen: 30, // ไนโตรเจนที่วัดได้
+//     phosphorus: 15, // ฟอสฟอรัสที่วัดได้
+//     potassium: 20, // โพแทสเซียมที่วัดได้
+// };
+
+// const result = analyzeFertilizerV2("Soybean", measuredNPK);
+// console.log("คำแนะนำการใส่ปุ๋ย:", result);
+
 // Example
 // var result = analyzeFertilizer("Rice", 10, 10, 10, 10, (gram = true));
 // console.log(result);
 
 module.exports = {
     analyzeFertilizer,
+    analyzeFertilizerV2,
 };

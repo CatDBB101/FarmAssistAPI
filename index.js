@@ -113,6 +113,9 @@ async function createNode(key, node_name) {
         "altitude",
         "light",
         "ph",
+        "n",
+        "p",
+        "k",
     ]);
     console.log("Node Created.");
 }
@@ -172,6 +175,9 @@ re_data = [
     "altitude",
     "light",
     "ph",
+    "n",
+    "p",
+    "k",
 ];
 
 app.put("/api/node/data", async (req, res) => {
@@ -527,6 +533,22 @@ io.on("connection", (socket) => {
                             Number(lastData[re_data.indexOf("soil_humi")]),
                             Number(lastData[re_data.indexOf("light")]),
                             (gram = true)
+                        );
+
+                    status.result.fertilizerV2 =
+                        analyze_fertilizer.analyzeFertilizerV2(
+                            params.crop_name,
+                            {
+                                nitrogen: Number(
+                                    lastData[re_data.indexOf("n")]
+                                ),
+                                phosphorus: Number(
+                                    lastData[re_data.indexOf("p")]
+                                ),
+                                potassium: Number(
+                                    lastData[re_data.indexOf("k")]
+                                ),
+                            }
                         );
 
                     status.result.vpd = analyze_vpd.calculateVPD(
