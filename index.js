@@ -220,6 +220,10 @@ test_status = {
     altitude: "altitude",
     light: "light",
     wind_speed: "wind_speed",
+    ph: "ph",
+    n: "n",
+    p: "p",
+    k: "k",
 };
 
 app.put("/test/node/data", async (req, res) => {
