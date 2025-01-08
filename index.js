@@ -526,12 +526,15 @@ io.on("connection", (socket) => {
                             light: Number(lastData[re_data.indexOf("light")]),
                             ph: Number(lastData[re_data.indexOf("ph")]),
                         });
-                    analyze_environment_result.overall =
+                    // analyze_environment_result.overall = 
+                    status.data.overall =
                         analyze_environment.overall_word(
                             analyze_environment_result.overall
                         );
-                    status.data.overall = analyze_environment_result.overall;
-                    console.log("analyze_environment : ", analyze_environment_result);
+                    console.log(
+                        "analyze_environment : ",
+                        analyze_environment_result
+                    );
 
                     status.result.environment = analyze_environment_result;
 
