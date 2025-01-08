@@ -12,6 +12,7 @@ const analyze_water = require("./analyze_water.js");
 const analyze_fertilizer = require("./analyze_fertilizer.js");
 const analyze_environment = require("./analyze_environment.js");
 const analyze_vpd = require("./analyze_vpd.js");
+const { stat } = require("fs");
 
 const app = express();
 const server = http.createServer(app);
@@ -515,7 +516,7 @@ io.on("connection", (socket) => {
                         params.crop_name
                     );
 
-                    status.result.environment =
+                    let analyze_environment_result =
                         analyze_environment.scoreEnvironment(params.crop_name, {
                             temp: Number(lastData[re_data.indexOf("temp")]),
                             humi: Number(lastData[re_data.indexOf("humi")]),
@@ -525,9 +526,14 @@ io.on("connection", (socket) => {
                             light: Number(lastData[re_data.indexOf("light")]),
                             ph: Number(lastData[re_data.indexOf("ph")]),
                         });
-                    status.data.overall = analyze_environment.overall_word(
-                        status.result.environment.overall
-                    );
+                    analyze_environment_result.overall =
+                        analyze_environment.overall_word(
+                            analyze_environment_result.overall
+                        );
+                    status.data.overall = analyze_environment_result.overall;
+                    console.log("analyze_environment : ", analyze_environment_result);
+
+                    status.result.environment = analyze_environment_result;
 
                     status.result.fertilizer =
                         analyze_fertilizer.analyzeFertilizer(

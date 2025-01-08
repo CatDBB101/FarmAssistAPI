@@ -16,13 +16,13 @@ function scoring(value, min, max, byTen = false) {
 }
 
 function overall_word(overall_score) {
-    if (overall_score == 0) {
+    if (overall_score >= 0 || overall_score < 1) {
         return "แย่มาก";
     } else if (overall_score >= 1 && overall_score <= 2) {
         return "แย่";
     } else if (overall_score >= 3 && overall_score <= 4) {
         return "ค่อนข้างแย่";
-    } else if (overall_score == 5) {
+    } else if (overall_score > 4 || overall_score < 6) {
         return "ปานกลาง";
     } else if (overall_score >= 6 && overall_score <= 7) {
         return "ค่อนข้างดี";
